@@ -1,0 +1,125 @@
+.container {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(to right, #f0f0ff, #e0f7ff);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f8e3ff, #e3f0ff);
+  border-radius: 0 40px 40px 0;
+  padding: 40px;
+  text-align: center;
+}
+
+.left h1 {
+  font-size: 48px;
+  color: #1d1d3b;
+  margin-bottom: 20px;
+}
+
+.rocket {
+  width: 500px;
+  margin-top: 20px;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.form {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.topText {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #333;
+}
+
+.loginTitle {
+  font-weight: bold;
+}
+
+.signupPrompt a {
+  color: #1d1d3b;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+label {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+}
+
+.passwordWrapper {
+  position: relative;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background-color: #1d1d3b;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.divider {
+  text-align: center;
+  margin: 20px 0;
+  color: #999;
+  font-size: 14px;
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.socials img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
