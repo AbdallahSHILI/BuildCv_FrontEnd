@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "../Login.module.css";
+import { AUTH_ENDPOINTS } from "../../../../config/api";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -9,6 +10,17 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Login submitted:", { name, password });
+    // Add your login API call here
+  };
+
+  const handleGoogleLogin = () => {
+    // Redirect to Google OAuth endpoint
+    window.location.href = AUTH_ENDPOINTS.GOOGLE_AUTH;
+  };
+
+  const handleFacebookLogin = () => {
+    // Add Facebook login logic here
+    console.log("Facebook login clicked");
   };
 
   return (
@@ -75,14 +87,22 @@ const LoginForm = () => {
         </div>
 
         <div className={styles.socialButtons}>
-          <button className={styles.socialBtn}>
+          <button
+            className={styles.socialBtn}
+            onClick={handleGoogleLogin}
+            type="button"
+          >
             <img
               src="https://www.google.com/favicon.ico"
               alt="Google"
               className={styles.socialIcon}
             />
           </button>
-          <button className={styles.socialBtn}>
+          <button
+            className={styles.socialBtn}
+            onClick={handleFacebookLogin}
+            type="button"
+          >
             <svg
               className={styles.socialIcon}
               viewBox="0 0 24 24"

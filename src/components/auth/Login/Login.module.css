@@ -77,17 +77,25 @@
   margin-bottom: 2.5rem;
 }
 
+.header {
+  margin-bottom: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .loginTitle {
   font-size: 2rem;
   font-weight: 700;
   color: #1a1a3e;
-  margin: 0 0 0.5rem 0;
+  margin: 0;
 }
 
 .signupText {
   font-size: 0.95rem;
   color: #666;
   margin: 0;
+  white-space: nowrap;
 }
 
 .signupLink {
