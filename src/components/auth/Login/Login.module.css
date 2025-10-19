@@ -119,6 +119,7 @@
   font-weight: 600;
   color: #333;
   margin-bottom: 0.5rem;
+  text-align: left;
 }
 
 .inputWrapper {
@@ -171,7 +172,7 @@
 }
 
 .loginBtn {
-  width: 100%;
+  width: 65%;
   padding: 1rem;
   font-size: 1rem;
   font-weight: 600;
