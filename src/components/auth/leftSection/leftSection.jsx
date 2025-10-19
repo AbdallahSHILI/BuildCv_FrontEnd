@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../Login.module.css";
-import RocketMan from "../../../../assets/rocket.png";
+import styles from "../AuthLayout.module.css";
+import RocketMan from "../../../assets/rocket.png";
 
 const LeftSection = () => {
   return (

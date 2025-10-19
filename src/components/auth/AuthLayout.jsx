@@ -1,17 +1,16 @@
 import React from "react";
-import styles from "./Login.module.css";
+import styles from "./AuthLayout.module.css";
 import LeftSection from "./leftSection/leftSection";
-import LoginForm from "./loginForm/loginForm";
 
-const Login = () => {
+const AuthLayout = ({ children }) => {
   return (
     <div className={styles.container}>
       <div className={styles.contentCard}>
         <LeftSection />
-        <LoginForm />
+        <div className={styles.rightSection}>{children}</div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default AuthLayout;
