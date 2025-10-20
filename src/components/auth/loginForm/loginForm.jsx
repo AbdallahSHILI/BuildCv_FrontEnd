@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "../AuthLayout.module.css";
 
 const LoginForm = () => {
@@ -17,7 +18,10 @@ const LoginForm = () => {
       <div className={styles.header}>
         <h2 className={styles.formTitle}>Login</h2>
         <p className={styles.linkText}>
-          New user? <span className={styles.link}>Sign up</span>
+          New user?{" "}
+          <Link to="/signup" className={styles.link}>
+            Sign up
+          </Link>
         </p>
       </div>
 

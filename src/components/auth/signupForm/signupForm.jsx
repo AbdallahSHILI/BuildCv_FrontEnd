@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "../AuthLayout.module.css";
 import { AUTH_ENDPOINTS } from "../../../config/api";
 
@@ -29,7 +30,10 @@ const SignupForm = () => {
       <div className={styles.header}>
         <h2 className={styles.formTitle}>Sign Up</h2>
         <p className={styles.linkText}>
-          Already have an account? <span className={styles.link}>Login</span>
+          Already have an account?{" "}
+          <Link to="/login" className={styles.link}>
+            Login
+          </Link>
         </p>
       </div>
 
