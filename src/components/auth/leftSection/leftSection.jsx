@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../AuthLayout.module.css";
-import RocketMan from "../../../assets/rocket.png";
+import { rocket } from "../../../assets/index";
 
 const LeftSection = () => {
   return (
@@ -11,7 +11,7 @@ const LeftSection = () => {
         limitless
       </h1>
       <div className={styles.rocketContainer}>
-        <img src={RocketMan} alt="Rocket" className={styles.rocket} />
+        <img src={rocket} alt="Rocket" className={styles.rocket} />
       </div>
     </div>
   );
