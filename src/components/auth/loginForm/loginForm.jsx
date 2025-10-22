@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { AUTH_ENDPOINTS } from "../../../config/api";
 import styles from "../AuthLayout.module.css";
+import { googleIcon, facebookIcon } from "../../../assets/index";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +13,14 @@ const LoginForm = () => {
     e.preventDefault();
     // Handle login logic here
     console.log("Login:", { email, password });
+  };
+
+  const handleGoogleSignup = () => {
+    window.location.href = AUTH_ENDPOINTS.GOOGLE_AUTH;
+  };
+
+  const handleFacebookSignup = () => {
+    console.log("Facebook login clicked");
   };
 
   return (
@@ -78,24 +88,21 @@ const LoginForm = () => {
       </div>
 
       <div className={styles.socialButtons}>
-        <button className={styles.socialBtn}>
-          <img
-            src="https://cdn.cdnlogo.com/logos/g/35/google-icon.svg"
-            alt="Google"
-            className={styles.socialIcon}
-          />
+        <button
+          className={styles.socialBtn}
+          onClick={handleGoogleSignup}
+          type="button"
+        >
+          <img src={googleIcon} alt="Google" className={styles.socialIcon} />
         </button>
-        <button className={styles.socialBtn}>
+        <button
+          className={styles.socialBtn}
+          onClick={handleFacebookSignup}
+          type="button"
+        >
           <img
-            src="https://cdn.cdnlogo.com/logos/f/84/facebook.svg"
+            src={facebookIcon}
             alt="Facebook"
-            className={styles.socialIcon}
-          />
-        </button>
-        <button className={styles.socialBtn}>
-          <img
-            src="https://cdn.cdnlogo.com/logos/a/30/apple.svg"
-            alt="Apple"
             className={styles.socialIcon}
           />
         </button>

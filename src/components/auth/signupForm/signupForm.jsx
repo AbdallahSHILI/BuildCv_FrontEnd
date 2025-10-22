@@ -120,7 +120,6 @@ const SignupForm = () => {
         >
           <img src={googleIcon} alt="Google" className={styles.socialIcon} />
         </button>
-
         <button
           className={styles.socialBtn}
           onClick={handleFacebookSignup}
