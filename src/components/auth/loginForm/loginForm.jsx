@@ -1,27 +1,50 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { AUTH_ENDPOINTS } from "../../../config/api";
+import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "../../../assets/context/AuthContext";
 import styles from "../AuthLayout.module.css";
 import { googleIcon, facebookIcon } from "../../../assets/index";
 
 const LoginForm = () => {
+  const { login, loginWithGoogle, isAuthenticated, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  // Redirect if already authenticated
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Login:", { email, password });
+    setError("");
+
+    try {
+      // Implement your traditional login logic here
+      await login(email, password);
+    } catch (err) {
+      setError("Login failed. Please check your credentials.");
+      console.error("Login error:", err);
+    }
   };
 
   const handleGoogleSignup = () => {
-    window.location.href = AUTH_ENDPOINTS.GOOGLE_AUTH;
+    loginWithGoogle();
   };
 
   const handleFacebookSignup = () => {
     console.log("Facebook login clicked");
+    // Implement Facebook login if needed
   };
+
+  if (loading) {
+    return (
+      <div className={styles.formCard}>
+        <div style={{ textAlign: "center", padding: "2rem" }}>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.formCard}>
@@ -35,6 +58,22 @@ const LoginForm = () => {
         </p>
       </div>
 
+      {error && (
+        <div
+          style={{
+            color: "#dc3545",
+            backgroundColor: "#f8d7da",
+            border: "1px solid #f5c6cb",
+            padding: "0.75rem",
+            marginBottom: "1rem",
+            borderRadius: "4px",
+            textAlign: "center",
+          }}
+        >
+          {error}
+        </div>
+      )}
+
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.inputGroup}>
           <label className={styles.label}>Email</label>
@@ -45,6 +84,7 @@ const LoginForm = () => {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
             {email && (
               <button
@@ -67,6 +107,7 @@ const LoginForm = () => {
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
             <button
               type="button"
