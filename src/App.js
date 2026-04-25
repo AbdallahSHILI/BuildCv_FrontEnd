@@ -11,6 +11,7 @@ import { AuthProvider } from "../src/assets/context/AuthContext";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import AuthCallback from "./components/auth/AuthCallback";
+import MainLayout from "./components/layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
@@ -28,14 +29,7 @@ function AnimatedRoutes() {
         <Route path="/auth/callback" element={<AuthCallback />} />
 
         {/* Protected Routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/dashboard" element={<Dashboard />} />
 
         {/* Default redirect */}
         <Route path="/" element={<Navigate to="/login" replace />} />
