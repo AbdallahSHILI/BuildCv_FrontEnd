@@ -1,41 +1,44 @@
 .navbar {
+  box-sizing: border-box; /* add this */
   height: 70px;
   width: 100%;
-  background: #0f172a; /* dark navy */
+  background: #0f172a;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 40px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid #1e293b;
+}
+
+.links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.links li {
+  cursor: pointer;
+  font-size: 15px;
+  color: #cbd5f5;
+  transition: 0.2s;
+}
+
+.links li:hover {
+  color: white;
 }
 
 .left {
   display: flex;
   align-items: center;
   gap: 40px;
-}
-
-.logo {
-  font-size: 20px;
-  font-weight: bold;
-  color: #38bdf8; /* light blue */
-}
-
-.links {
-  display: flex;
-  list-style: none;
-  gap: 25px;
-}
-
-.links li {
-  cursor: pointer;
-  font-size: 15px;
-  transition: 0.2s;
-}
-
-.links li:hover {
-  color: #38bdf8;
 }
 
 .right {
@@ -50,16 +53,16 @@
 }
 
 .download {
-  background: #38bdf8;
+  background: var(--primary);
   border: none;
   padding: 8px 16px;
   border-radius: 8px;
-  color: black;
+  color: white;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .download:hover {
-  background: #0ea5e9;
+  background: var(--primary-hover);
 }

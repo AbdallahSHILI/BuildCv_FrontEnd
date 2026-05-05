@@ -29,7 +29,14 @@ function AnimatedRoutes() {
         <Route path="/auth/callback" element={<AuthCallback />} />
 
         {/* Protected Routes */}
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <MainLayout>
+              <Dashboard />
+            </MainLayout>
+          }
+        />
 
         {/* Default redirect */}
         <Route path="/" element={<Navigate to="/login" replace />} />

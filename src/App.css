@@ -1,7 +1,16 @@
-.App {
-  text-align: center;
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
+.App {
+  min-height: 100vh;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -13,15 +22,20 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+
+  --bg: #f8fafc;
+  --surface: #ffffff;
+
+  --navbar: #0f172a;
+  --border: #e2e8f0;
+
+  --text: #0f172a;
+  --text-muted: #64748b;
+
+  --accent: #22c55e;
 }
 
 .App-link {
