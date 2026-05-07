@@ -1,3 +1,4 @@
-export { default as logo } from "./images/logo.png";
-export { default as user } from "./images/user.png";
-export { default as background } from "./images/bg.jpg";
+export { default as Customize } from "./Customize.svg";
+export { default as IA_Tools } from "./IA_Tools.svg";
+export { default as Content } from "./Content.svg";
+export { default as Nine_Point } from "./Nine_Point.svg";

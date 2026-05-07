@@ -1,5 +1,5 @@
 .navbar {
-  box-sizing: border-box; /* add this */
+  box-sizing: border-box;
   height: 70px;
   width: 100%;
   background: #0f172a;
@@ -13,11 +13,12 @@
 
 .links {
   display: flex;
-  gap: 24px;
+  gap: 8px;
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 .logo {
   font-size: 20px;
   font-weight: bold;
@@ -25,14 +26,42 @@
 }
 
 .links li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   cursor: pointer;
   font-size: 15px;
   color: #cbd5f5;
   transition: 0.2s;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
 }
 
 .links li:hover {
   color: white;
+}
+
+.links li:hover .navIcon {
+  opacity: 1;
+}
+
+.links li.active {
+  color: white;
+  border: 1px solid #334155;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.links li.active .navIcon {
+  opacity: 1;
+}
+
+.navIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
 }
 
 .left {
