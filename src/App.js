@@ -13,6 +13,7 @@ import Signup from "./components/auth/Signup";
 import AuthCallback from "./components/auth/AuthCallback";
 import MainLayout from "./components/layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
+import LandingPage from "./pages/Landing/Landing";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function AnimatedRoutes() {
@@ -40,6 +41,7 @@ function AnimatedRoutes() {
 
         {/* Default redirect */}
         <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/landing" element={<LandingPage />} />
       </Routes>
     </AnimatePresence>
   );
