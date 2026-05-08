@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useInView } from "../../hooks/useInView";
+import { useInView } from "../hooks/useInView";
 import styles from "../Landing.module.css";
 
 const testimonials = [
