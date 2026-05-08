@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import LandingNavbar from "../../components/navbar/landingNavbar/LandingNavbar";
 import styles from "./Landing.module.css";
 
 /* ─── Testimonials data ─── */
@@ -198,6 +199,7 @@ const Landing = () => {
 
   return (
     <div className={styles.page}>
+      <LandingNavbar />
       {/* ── HERO ── */}
       <section
         ref={heroRef}
