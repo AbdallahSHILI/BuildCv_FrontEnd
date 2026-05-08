@@ -6,7 +6,7 @@ import {
   Content,
   Nine_Point,
   Download,
-} from "../../assets/images";
+} from "../../../assets/images";
 
 const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
