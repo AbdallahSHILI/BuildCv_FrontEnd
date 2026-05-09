@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./Navbar.module.css";
+import { useAuth } from "../../../assets/context/AuthContext";
 import {
   Customize,
   IA_Tools,
@@ -10,6 +11,11 @@ import {
 
 const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user } = useAuth(); // grab the current user from context
+
+  // Extract Google photo if available
+  const googlePhoto = user?.profilePicture || user?._json?.picture || null;
+  const displayName = user?.displayName || user?.name || null;
 
   return (
     <>
@@ -42,6 +48,19 @@ const Navbar = () => {
             Download
             <img src={Download} alt="" className={styles.downloadIcon} />
           </button>
+
+          {/* Google profile avatar — only shown when logged in via Google */}
+          {googlePhoto && (
+            <div className={styles.avatarWrapper} title={displayName}>
+              <img
+                src={googlePhoto}
+                alt={displayName || "Profile"}
+                className={styles.avatar}
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          )}
+
           <button
             className={styles.hamburger}
             onClick={() => setSidebarOpen(true)}
@@ -91,6 +110,20 @@ const Navbar = () => {
         </ul>
 
         <div className={styles.sidebarBottom}>
+          {/* Avatar in sidebar bottom too */}
+          {googlePhoto && (
+            <div className={styles.sidebarUser}>
+              <img
+                src={googlePhoto}
+                alt={displayName || "Profile"}
+                className={styles.sidebarAvatar}
+                referrerPolicy="no-referrer"
+              />
+              {displayName && (
+                <span className={styles.sidebarName}>{displayName}</span>
+              )}
+            </div>
+          )}
           <span className={styles.sidebarResume}>Resume 1</span>
           <button className={styles.download}>
             Download
