@@ -92,6 +92,55 @@
   flex-shrink: 0;
 }
 
+/* ── Avatar ── */
+.avatarWrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #334155;
+  transition: border-color 0.2s;
+}
+
+.avatar:hover {
+  border-color: #64748b;
+}
+
+/* ── Sidebar user info ── */
+.sidebarUser {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #334155;
+  margin-bottom: 4px;
+}
+
+.sidebarAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #334155;
+  flex-shrink: 0;
+}
+
+.sidebarName {
+  font-size: 13px;
+  color: #cbd5f5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* ── Hamburger ── */
 .hamburger {
   display: none;
