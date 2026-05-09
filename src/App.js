@@ -12,8 +12,7 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import AuthCallback from "./components/auth/AuthCallback";
 import MainLayout from "./components/layout/MainLayout";
-import Dashboard from "./pages/Dashboard";
-import LandingPage from "./pages/Landing/Landing";
+import { Dashboard, LandingPage, ResumePage } from "./pages/index";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function AnimatedRoutes() {
@@ -42,6 +41,7 @@ function AnimatedRoutes() {
         {/* Default redirect */}
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/landing" element={<LandingPage />} />
+        <Route path="/resumes" element={<ResumePage />} />
       </Routes>
     </AnimatePresence>
   );

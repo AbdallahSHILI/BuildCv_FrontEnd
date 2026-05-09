@@ -1,0 +1,388 @@
+/* ── Layout ── */
+.page {
+  display: flex;
+  min-height: calc(100vh - 70px); /* subtract navbar height */
+  background: #f1f5f9;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 220px;
+  min-width: 220px;
+  background: #0f172a;
+  border-right: 1px solid #1e293b;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 0;
+  position: sticky;
+  top: 70px;
+  height: calc(100vh - 70px);
+  box-sizing: border-box;
+}
+
+.sidebarTop {
+  flex: 1;
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 12px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5f5;
+}
+
+.navActive {
+  background: rgba(255, 255, 255, 0.07);
+  color: #e2e8f0;
+  font-weight: 600;
+  border: 1px solid #1e293b;
+}
+
+/* ── Sidebar Bottom CTA ── */
+.sidebarBottom {
+  padding: 16px 14px;
+  border-top: 1px solid #1e293b;
+}
+
+.sidebarCta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ctaHint {
+  font-size: 11px;
+  color: #475569;
+  line-height: 1.4;
+  margin: 0 0 4px;
+  text-align: center;
+}
+
+.loginBtn {
+  display: block;
+  text-align: center;
+  padding: 9px 0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid #334155;
+  color: #cbd5f5;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.loginBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #475569;
+}
+
+.signupBtn {
+  display: block;
+  text-align: center;
+  padding: 9px 0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  background: #e2e8f0;
+  color: #0f172a;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.signupBtn:hover {
+  background: #f8fafc;
+}
+
+/* ── Main ── */
+.main {
+  flex: 1;
+  padding: 40px 48px;
+  overflow-y: auto;
+}
+
+/* ── Hero ── */
+.hero {
+  margin-bottom: 36px;
+}
+
+.heroLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+
+.heroTitle {
+  font-size: 38px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.15;
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+}
+
+.heroAccent {
+  color: #3b82f6;
+  position: relative;
+}
+
+.heroAccent::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #bfdbfe;
+  border-radius: 2px;
+  z-index: -1;
+}
+
+.heroSub {
+  font-size: 15px;
+  color: #64748b;
+  margin: 0;
+  max-width: 480px;
+}
+
+/* ── Filter Bar ── */
+.filterBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filterTabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filterTab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.18s;
+}
+
+.filterTab:hover {
+  border-color: #94a3b8;
+  color: #1e293b;
+}
+
+.filterActive {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: white;
+}
+
+.filterActive:hover {
+  background: #1e293b;
+  border-color: #1e293b;
+  color: white;
+}
+
+.importBtn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: 1.5px solid #0f172a;
+  background: white;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.18s;
+  white-space: nowrap;
+}
+
+.importBtn:hover {
+  background: #0f172a;
+  color: white;
+}
+
+/* ── CV Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 20px;
+}
+
+/* ── CV Card ── */
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+  cursor: pointer;
+  animation: fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+  border-color: #cbd5e1;
+}
+
+.cardPreview {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.cardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Overlay on hover */
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.72);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.card:hover .cardOverlay {
+  opacity: 1;
+}
+
+.useBtn {
+  padding: 9px 20px;
+  border-radius: 8px;
+  background: white;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.useBtn:hover {
+  background: #f1f5f9;
+}
+
+.previewBtn {
+  padding: 7px 20px;
+  border-radius: 8px;
+  background: transparent;
+  color: #e2e8f0;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.previewBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Card footer */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.cardLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.cardTag {
+  font-size: 11px;
+  font-weight: 600;
+  color: #3b82f6;
+  background: #eff6ff;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 180px;
+    min-width: 180px;
+  }
+  .main {
+    padding: 28px 24px;
+  }
+}
+
+@media (max-width: 680px) {
+  .sidebar {
+    display: none;
+  }
+  .heroTitle {
+    font-size: 28px;
+  }
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+  }
+}
