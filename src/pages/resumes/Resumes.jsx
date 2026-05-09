@@ -24,6 +24,10 @@ const Resumes = () => {
     <div className={styles.page}>
       {/* ── Sidebar ── */}
       <aside className={styles.sidebar}>
+        <div className={styles.sidebarLogo}>
+          <span className={styles.logoBuild}>Build</span>
+          <span className={styles.logoCV}>CV</span>
+        </div>
         <div className={styles.sidebarTop}>
           <nav className={styles.sidebarNav}>
             <div className={`${styles.navItem} ${styles.navActive}`}>
