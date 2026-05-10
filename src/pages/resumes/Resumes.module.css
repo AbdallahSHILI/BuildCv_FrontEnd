@@ -7,7 +7,21 @@
   font-family: "Segoe UI", system-ui, sans-serif;
 }
 
-/* ── Sidebar Logo ── */
+/* ── Sidebar ── */
+.sidebar {
+  width: 220px;
+  min-width: 220px;
+  background: #0f172a;
+  border-right: 1px solid #1e293b;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+}
+
 .sidebarLogo {
   height: 70px;
   display: flex;
@@ -26,21 +40,6 @@
 
 .logoCV {
   color: #3b82f6;
-}
-
-/* ── Sidebar ── */
-.sidebar {
-  width: 220px;
-  min-width: 220px;
-  background: #0f172a;
-  border-right: 1px solid #1e293b;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  box-sizing: border-box;
-  position: sticky;
-  top: 0;
-  flex-shrink: 0;
 }
 
 .sidebarTop {
@@ -80,7 +79,6 @@
   border: 1px solid #1e293b;
 }
 
-/* ── Sidebar Bottom CTA ── */
 .sidebarBottom {
   padding: 16px 14px;
   border-top: 1px solid #1e293b;
@@ -315,7 +313,6 @@
   display: block;
 }
 
-/* Overlay on hover */
 .cardOverlay {
   position: absolute;
   inset: 0;
@@ -366,7 +363,6 @@
   border-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Card footer */
 .cardFooter {
   display: flex;
   align-items: center;
