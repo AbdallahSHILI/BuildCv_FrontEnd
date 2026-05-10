@@ -1,7 +1,7 @@
 import { useState } from "react";
 // import { useAuth } from "../../../assets/context/AuthContext";
 
-import { Sidebar, Hero, FilterBar, CVGrid } from "./index";
+import { Sidebar, Hero, FilterBar, CVGrid } from "./components/index";
 
 import styles from "./Resumes.module.css";
 
