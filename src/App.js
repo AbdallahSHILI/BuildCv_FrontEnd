@@ -12,7 +12,13 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import AuthCallback from "./components/auth/AuthCallback";
 import MainLayout from "./components/layout/MainLayout";
-import { Dashboard, LandingPage, ResumePage, ContentPage } from "./pages/index";
+import {
+  Dashboard,
+  LandingPage,
+  ResumePage,
+  ContentPage,
+  ResumeTemplates,
+} from "./pages/index";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function AnimatedRoutes() {
@@ -43,6 +49,7 @@ function AnimatedRoutes() {
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/resumes" element={<ResumePage />} />
         <Route path="/content" element={<ContentPage />} />
+        <Route path="/templates" element={<ResumeTemplates />} />
       </Routes>
     </AnimatePresence>
   );
