@@ -1,0 +1,548 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap");
+
+/* ══════════════════════════════════════════
+   PRICING PAGE — matches Landing.module.css
+   Colors: --primary #2563eb  --dark #0f172a
+           --bg #f8fafc  --accent #22c55e
+   Fonts: Sora (headings) · DM Sans (body)
+══════════════════════════════════════════ */
+
+/* ── Page wrapper ── */
+.page {
+  min-height: 100vh;
+  background: var(--bg, #f8fafc);
+  color: var(--text, #0f172a);
+  font-family: "DM Sans", sans-serif;
+  overflow-x: hidden;
+}
+
+/* ════════════════════════════
+   HERO / HEADER
+════════════════════════════ */
+.hero {
+  position: relative;
+  background: var(--dark, #0f172a);
+  text-align: center;
+  padding: 120px 80px 80px;
+  overflow: hidden;
+}
+
+/* Grid texture — same as Landing hero */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+}
+
+/* Blue glow blobs */
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #2563eb1a 0%, transparent 65%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.heroTag {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  background: rgba(37, 99, 235, 0.15);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  color: #93c5fd;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 22px;
+}
+
+.heroTitle {
+  position: relative;
+  z-index: 1;
+  font-family: "Sora", sans-serif;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+}
+
+.heroAccent {
+  background: linear-gradient(135deg, #2563eb, #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroSub {
+  position: relative;
+  z-index: 1;
+  color: #94a3b8;
+  font-size: 17px;
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto 36px;
+}
+
+/* ── Monthly / Yearly toggle ── */
+.toggleWrap {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggleLabel {
+  font-size: 14px;
+  color: #64748b;
+  cursor: pointer;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.toggleLabelActive {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.toggleTrack {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background 0.25s,
+    border-color 0.25s;
+  padding: 0;
+}
+
+.toggleTrackOn {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.toggleThumbOn {
+  transform: translateX(22px);
+}
+
+.saveBadge {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* ════════════════════════════
+   CARDS GRID
+════════════════════════════ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 24px;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 64px 80px 80px;
+  align-items: start;
+}
+
+/* ── Single plan card ── */
+.planCard {
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 16px;
+  padding: 36px 30px;
+  position: relative;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.planCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+}
+
+/* Featured card — dark like hero */
+.planCardFeatured {
+  background: var(--dark, #0f172a);
+  border: 1px solid #334155;
+  box-shadow: 0 24px 64px rgba(37, 99, 235, 0.25);
+  transform: scale(1.03);
+}
+
+.planCardFeatured:hover {
+  transform: scale(1.03) translateY(-4px);
+  box-shadow: 0 32px 80px rgba(37, 99, 235, 0.32);
+}
+
+/* ⚡ Most popular badge */
+.popularBadge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #2563eb, #0ea5e9);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 4px 16px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ── Icon chip ── */
+.planIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+/* ── Name ── */
+.planName {
+  font-family: "Sora", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--dark, #0f172a);
+  margin: 0 0 8px;
+}
+
+.planNameLight {
+  color: #fff;
+}
+
+/* ── Description ── */
+.planDesc {
+  font-size: 13.5px;
+  color: var(--text-muted, #64748b);
+  line-height: 1.55;
+  margin: 0 0 22px;
+}
+
+.planDescLight {
+  color: #64748b;
+}
+
+/* ── Price row ── */
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.priceCurrency {
+  font-family: "Sora", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dark, #0f172a);
+  line-height: 1;
+}
+
+.priceCurrencyLight {
+  color: #fff;
+}
+
+.priceAmount {
+  font-family: "Sora", sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--dark, #0f172a);
+}
+
+.priceAmountLight {
+  color: #fff;
+}
+
+.pricePeriod {
+  font-size: 13px;
+  color: var(--text-muted, #64748b);
+  margin: 0 0 4px;
+}
+
+.pricePeriodLight {
+  color: #475569;
+}
+
+.priceNote {
+  font-size: 12px;
+  color: var(--text-muted, #64748b);
+  margin: 0 0 22px;
+}
+
+.priceNoteLight {
+  color: #475569;
+}
+
+/* ── CTA buttons ── */
+.planBtn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition:
+    background 0.2s,
+    transform 0.15s,
+    opacity 0.2s;
+  margin-bottom: 28px;
+}
+
+.planBtn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* Default (Starter) */
+.planBtnDefault {
+  background: #f1f5f9;
+  color: var(--dark, #0f172a);
+}
+
+.planBtnDefault:hover {
+  background: #e2e8f0;
+  opacity: 1;
+}
+
+/* Featured (Pro) — solid blue like Landing's ctaPrimary */
+.planBtnFeatured {
+  background: var(--primary, #2563eb);
+  color: #fff;
+}
+
+.planBtnFeatured:hover {
+  background: var(--primary-hover, #1d4ed8);
+  opacity: 1;
+}
+
+/* Enterprise */
+.planBtnEnterprise {
+  background: transparent;
+  color: var(--dark, #0f172a);
+  border: 1.5px solid var(--border, #e2e8f0);
+}
+
+.planBtnEnterprise:hover {
+  background: #f1f5f9;
+  opacity: 1;
+}
+
+/* ── Feature divider ── */
+.featureDivider {
+  height: 1px;
+  background: var(--border, #e2e8f0);
+  margin-bottom: 18px;
+}
+
+.featureDividerDark {
+  background: #1e293b;
+}
+
+.featureLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted, #64748b);
+  margin: 0 0 14px;
+}
+
+.featureLabelLight {
+  color: #475569;
+}
+
+/* ── Feature list ── */
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text, #0f172a);
+  line-height: 1.4;
+}
+
+.featureItemLight {
+  color: #cbd5e1;
+}
+
+.featureCheck {
+  font-size: 10px;
+  font-weight: 800;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Light cards → green checks (Landing accent) */
+.featureCheckGreen {
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+}
+
+/* Featured dark card → blue checks */
+.featureCheckBlue {
+  background: rgba(37, 99, 235, 0.18);
+  color: #60a5fa;
+}
+
+/* ════════════════════════════
+   FAQ SECTION
+════════════════════════════ */
+.faq {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 80px 100px;
+}
+
+.faqTitle {
+  font-family: "Sora", sans-serif;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--dark, #0f172a);
+  margin: 0 0 40px;
+}
+
+.faqItem {
+  border-bottom: 1px solid var(--border, #e2e8f0);
+  padding: 20px 0;
+  animation: fadeUpIn 0.5s ease both;
+}
+
+.faqQuestion {
+  font-family: "Sora", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dark, #0f172a);
+  margin: 0 0 8px;
+}
+
+.faqAnswer {
+  font-size: 14px;
+  color: var(--text-muted, #64748b);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ════════════════════════════
+   ANIMATIONS (shared w/ Landing)
+════════════════════════════ */
+@keyframes fadeUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animFadeUp {
+  opacity: 0;
+  animation: fadeUp 0.55s ease forwards;
+}
+
+/* ════════════════════════════
+   RESPONSIVE
+════════════════════════════ */
+@media (max-width: 960px) {
+  .hero {
+    padding: 100px 40px 64px;
+  }
+  .grid {
+    padding: 48px 40px 64px;
+  }
+  .faq {
+    padding: 0 40px 80px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 90px 24px 56px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    padding: 40px 24px 60px;
+  }
+  .planCardFeatured {
+    transform: none;
+  }
+  .planCardFeatured:hover {
+    transform: translateY(-4px);
+  }
+  .faq {
+    padding: 0 24px 64px;
+  }
+}

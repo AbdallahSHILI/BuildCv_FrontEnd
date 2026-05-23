@@ -18,8 +18,9 @@ import {
   ResumePage,
   ContentPage,
   ResumeTemplates,
+  PricingPage,
 } from "./pages/index";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+// import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -50,6 +51,7 @@ function AnimatedRoutes() {
         <Route path="/resumes" element={<ResumePage />} />
         <Route path="/content" element={<ContentPage />} />
         <Route path="/templates" element={<ResumeTemplates />} />
+        <Route path="/pricing" element={<PricingPage />} />
       </Routes>
     </AnimatePresence>
   );

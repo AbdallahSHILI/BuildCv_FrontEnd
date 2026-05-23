@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./ResumeTemplates.module.css";
-// import Navbar from "../Navbar/Navbar";
+import Navbar from "../../components/navbar/landingNavbar/LandingNavbar";
 import TemplatesHero from "./components/TemplatesHero";
 import TemplatesSidebar from "./components/TemplatesSidebar";
 import TemplatesGrid from "./components/TemplatesGrid";
@@ -36,7 +36,7 @@ const ResumeTemplates = () => {
 
   return (
     <div className={styles.page}>
-      {/* <Navbar /> */}
+      <Navbar />
 
       <TemplatesHero
         styles={styles}
