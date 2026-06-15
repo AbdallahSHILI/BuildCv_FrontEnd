@@ -19,6 +19,7 @@ import {
   ContentPage,
   ResumeTemplates,
   PricingPage,
+  AboutPage,
 } from "./pages/index";
 // import ProtectedRoute from "./components/auth/ProtectedRoute";
 
@@ -52,6 +53,7 @@ function AnimatedRoutes() {
         <Route path="/content" element={<ContentPage />} />
         <Route path="/templates" element={<ResumeTemplates />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
     </AnimatePresence>
   );

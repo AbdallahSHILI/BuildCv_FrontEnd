@@ -51,13 +51,27 @@ const LandingNavbar = () => {
 
       {/* ── Nav links ── */}
       <nav className={styles.links}>
-        <a href="#templates" className={styles.link}>
+        <a
+          href="/templates"
+          className={styles.link}
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/templates");
+          }}
+        >
           Resume Templates
         </a>
-        <a href="#pricing" className={styles.link}>
+        <a
+          href="/pricing"
+          className={styles.link}
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/pricing");
+          }}
+        >
           Pricing
         </a>
-        <a href="#about" className={styles.link}>
+        <a href="/about" className={styles.link}>
           About
         </a>
       </nav>
@@ -87,16 +101,24 @@ const LandingNavbar = () => {
       {menuOpen && (
         <div className={styles.mobileMenu}>
           <a
-            href="#templates"
+            href="/templates"
             className={styles.mobileLink}
-            onClick={() => setMenuOpen(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              setMenuOpen(false);
+              navigate("/templates");
+            }}
           >
             Resume Templates
           </a>
           <a
-            href="#pricing"
+            href="/pricing"
             className={styles.mobileLink}
-            onClick={() => setMenuOpen(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              setMenuOpen(false);
+              navigate("/pricing");
+            }}
           >
             Pricing
           </a>

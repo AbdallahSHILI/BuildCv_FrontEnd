@@ -4,3 +4,4 @@ export { default as ResumePage } from "./resumes/Resumes";
 export { default as ContentPage } from "./content/Content";
 export { default as ResumeTemplates } from "./resume-templates/ResumeTemplates";
 export { default as PricingPage } from "./pricing/Pricing";
+export { default as AboutPage } from "./about/about";
