@@ -1,0 +1,109 @@
+/* ══════════════════════════════
+   SHARED MODALS
+   src/components/modals/modals.module.css
+══════════════════════════════ */
+
+/* ── Backdrop ── */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  box-sizing: border-box;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Modal container ── */
+.content {
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+  animation: slideUp 0.22s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.content::-webkit-scrollbar {
+  width: 4px;
+}
+.content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* ── Close button ── */
+.closeBtn {
+  position: fixed;
+  top: 20px;
+  right: 28px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  color: #0f172a;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  transition:
+    background 0.15s,
+    transform 0.15s;
+  padding: 0;
+}
+
+.closeBtn:hover {
+  background: #f1f5f9;
+  transform: scale(1.08);
+}
+
+/* ── CV sheet inside modal ── */
+.cvSheet {
+  width: 660px;
+  max-width: 90vw;
+  background: #fff;
+  border-radius: 4px;
+  padding: 40px 44px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.cvSheet::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0f172a, #2563eb, #22c55e);
+}
