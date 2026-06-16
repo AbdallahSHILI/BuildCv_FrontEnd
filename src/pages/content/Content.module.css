@@ -623,3 +623,43 @@
   letter-spacing: 0.04em;
   color: #fff;
 }
+
+/* Modal styles have been moved to:
+   src/components/modals/modals.module.css */
+
+/* ══════════════════════════════
+   REORDER
+══════════════════════════════ */
+.reorderList {
+  display: flex;
+  flex-direction: column;
+}
+
+.reorderIcon {
+  width: 14px;
+  height: 14px;
+  display: block;
+  /* inherit the button's color tint so hover works */
+  filter: invert(67%) sepia(8%) saturate(400%) hue-rotate(180deg);
+  transition: filter 0.15s;
+}
+
+.reorderBtn:hover .reorderIcon {
+  filter: invert(30%) sepia(90%) saturate(600%) hue-rotate(200deg);
+}
+
+/* slide-up flash when a field is reordered */
+@keyframes slideUp {
+  0% {
+    transform: translateY(6px);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fieldSliding {
+  animation: slideUp 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import styles from "../Content.module.css";
+import Arrows from "../../../assets/Arrows_TopDown.svg";
 
 const EXTRA_FIELDS = [
   "LinkedIn",
@@ -14,35 +15,45 @@ const EXTRA_FIELDS = [
   "Military Service",
 ];
 
+const DEFAULT_FIELDS = [
+  { key: "phone", label: "Phone", placeholder: "Enter Phone", type: "tel" },
+  { key: "email", label: "Email", placeholder: "Enter email", type: "email" },
+  {
+    key: "location",
+    label: "Location",
+    placeholder: "City, Country",
+    type: "text",
+  },
+];
+
 const PersonalDetailsForm = ({ data, onChange }) => {
   const [activeExtras, setActiveExtras] = useState([]);
   const [showMore, setShowMore] = useState(false);
+  const [fieldOrder, setFieldOrder] = useState(
+    DEFAULT_FIELDS.map((f) => f.key),
+  );
+  const [animating, setAnimating] = useState(null); // key of the field being animated
   const fileInputRef = useRef(null);
 
   const visibleExtras = showMore ? EXTRA_FIELDS : EXTRA_FIELDS.slice(0, 6);
 
-  const toggleExtra = (field) => {
+  /* ── helpers ── */
+  const toggleExtra = (field) =>
     setActiveExtras((prev) =>
       prev.includes(field) ? prev.filter((f) => f !== field) : [...prev, field],
     );
-  };
 
   const handleChange = (field) => (e) =>
     onChange({ ...data, [field]: e.target.value });
 
-  const handlePhotoClick = () => {
-    fileInputRef.current?.click();
-  };
+  const handlePhotoClick = () => fileInputRef.current?.click();
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (ev) => {
-      onChange({ ...data, photo: ev.target.result });
-    };
+    reader.onload = (ev) => onChange({ ...data, photo: ev.target.result });
     reader.readAsDataURL(file);
-    // reset so the same file can be re-selected
     e.target.value = "";
   };
 
@@ -50,6 +61,42 @@ const PersonalDetailsForm = ({ data, onChange }) => {
     e.stopPropagation();
     onChange({ ...data, photo: "" });
   };
+
+  /* ── reorder: move the clicked field one step up, wrap around ── */
+  const reorderField = (key) => {
+    if (animating) return; // block if already animating
+    setAnimating(key);
+    setTimeout(() => {
+      setFieldOrder((prev) => {
+        const idx = prev.indexOf(key);
+        const next = [...prev];
+        const target = (idx - 1 + next.length) % next.length; // move up, wrap
+        [next[idx], next[target]] = [next[target], next[idx]];
+        return next;
+      });
+      setAnimating(null);
+    }, 220); // matches CSS transition duration
+  };
+
+  const reorderExtra = (key) => {
+    if (animating) return;
+    setAnimating(key);
+    setTimeout(() => {
+      setActiveExtras((prev) => {
+        const idx = prev.indexOf(key);
+        const next = [...prev];
+        const target = (idx - 1 + next.length) % next.length;
+        [next[idx], next[target]] = [next[target], next[idx]];
+        return next;
+      });
+      setAnimating(null);
+    }, 220);
+  };
+
+  /* ── ordered field definitions ── */
+  const orderedFields = fieldOrder.map((key) =>
+    DEFAULT_FIELDS.find((f) => f.key === key),
+  );
 
   return (
     <div className={styles.formSection}>
@@ -71,6 +118,7 @@ const PersonalDetailsForm = ({ data, onChange }) => {
         </button>
       </div>
 
+      {/* ── Name / Title / Photo ── */}
       <div className={styles.topRow}>
         <div className={styles.leftFields}>
           <div className={styles.fieldGroup}>
@@ -95,8 +143,6 @@ const PersonalDetailsForm = ({ data, onChange }) => {
 
         <div className={styles.photoCol}>
           <label className={styles.label}>Photo</label>
-
-          {/* Hidden file input */}
           <input
             ref={fileInputRef}
             type="file"
@@ -104,7 +150,6 @@ const PersonalDetailsForm = ({ data, onChange }) => {
             style={{ display: "none" }}
             onChange={handleFileChange}
           />
-
           <div className={styles.photoWrapper}>
             <div className={styles.photoCircle} onClick={handlePhotoClick}>
               {data.photo ? (
@@ -139,7 +184,6 @@ const PersonalDetailsForm = ({ data, onChange }) => {
                 </>
               )}
             </div>
-
             {data.photo && (
               <button
                 className={styles.photoDeleteBtn}
@@ -153,52 +197,39 @@ const PersonalDetailsForm = ({ data, onChange }) => {
         </div>
       </div>
 
-      {[
-        {
-          key: "phone",
-          label: "Phone",
-          placeholder: "Enter Phone",
-          type: "tel",
-        },
-        {
-          key: "email",
-          label: "Email",
-          placeholder: "Enter email",
-          type: "email",
-        },
-        {
-          key: "location",
-          label: "Location",
-          placeholder: "City, Country",
-          type: "text",
-        },
-      ].map(({ key, label, placeholder, type }) => (
-        <div className={styles.fieldGroup} key={key}>
-          <label className={styles.label}>{label}</label>
-          <div className={styles.inputRow}>
-            <input
-              className={styles.input}
-              type={type}
-              placeholder={placeholder}
-              value={data[key]}
-              onChange={handleChange(key)}
-            />
-            <button className={styles.reorderBtn} title="Reorder">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
+      {/* ── Reorderable core fields ── */}
+      <div className={styles.reorderList}>
+        {orderedFields.map(({ key, label, placeholder, type }) => (
+          <div
+            key={key}
+            className={`${styles.fieldGroup} ${animating === key ? styles.fieldSliding : ""}`}
+          >
+            <label className={styles.label}>{label}</label>
+            <div className={styles.inputRow}>
+              <input
+                className={styles.input}
+                type={type}
+                placeholder={placeholder}
+                value={data[key] || ""}
+                onChange={handleChange(key)}
+              />
+              <button
+                className={styles.reorderBtn}
+                title={`Move ${label} up`}
+                onClick={() => reorderField(key)}
               >
-                <path d="M12 3v18M6 8l6-6 6 6M6 16l6 6 6-6" />
-              </svg>
-            </button>
+                <img
+                  src={Arrows}
+                  alt="reorder"
+                  className={styles.reorderIcon}
+                />
+              </button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
+      {/* ── Add Details chips ── */}
       <div className={styles.addDetails}>
         <p className={styles.addDetailsTitle}>Add details</p>
         <div className={styles.chipRow}>
@@ -223,10 +254,11 @@ const PersonalDetailsForm = ({ data, onChange }) => {
           </button>
         </div>
 
+        {/* ── Reorderable extra fields ── */}
         {activeExtras.map((field) => (
           <div
-            className={styles.fieldGroup}
             key={field}
+            className={`${styles.fieldGroup} ${animating === field ? styles.fieldSliding : ""}`}
             style={{ marginTop: "12px" }}
           >
             <label className={styles.label}>{field}</label>
@@ -237,17 +269,16 @@ const PersonalDetailsForm = ({ data, onChange }) => {
                 value={data[field] || ""}
                 onChange={handleChange(field)}
               />
-              <button className={styles.reorderBtn}>
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M12 3v18M6 8l6-6 6 6M6 16l6 6 6-6" />
-                </svg>
+              <button
+                className={styles.reorderBtn}
+                title={`Move ${field} up`}
+                onClick={() => reorderExtra(field)}
+              >
+                <img
+                  src={Arrows}
+                  alt="reorder"
+                  className={styles.reorderIcon}
+                />
               </button>
             </div>
           </div>
