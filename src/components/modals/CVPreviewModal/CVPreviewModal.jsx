@@ -1,14 +1,6 @@
 import styles from "./CVPreviewModal.module.css";
 import cvStyles from "../../../pages/content/Content.module.css";
 
-/**
- * CVPreviewModal
- *
- * Props:
- *   isOpen  {boolean}  – controls visibility
- *   onClose {function} – called when backdrop or × is clicked
- *   data    {object}   – the CV data object (fullName, title, phone, email, location, photo)
- */
 const CVPreviewModal = ({ isOpen, onClose, data }) => {
   if (!isOpen) return null;
 
