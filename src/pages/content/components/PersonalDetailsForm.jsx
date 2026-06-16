@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styles from "../Content.module.css";
 
 const EXTRA_FIELDS = [
@@ -17,6 +17,7 @@ const EXTRA_FIELDS = [
 const PersonalDetailsForm = ({ data, onChange }) => {
   const [activeExtras, setActiveExtras] = useState([]);
   const [showMore, setShowMore] = useState(false);
+  const fileInputRef = useRef(null);
 
   const visibleExtras = showMore ? EXTRA_FIELDS : EXTRA_FIELDS.slice(0, 6);
 
@@ -28,6 +29,27 @@ const PersonalDetailsForm = ({ data, onChange }) => {
 
   const handleChange = (field) => (e) =>
     onChange({ ...data, [field]: e.target.value });
+
+  const handlePhotoClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      onChange({ ...data, photo: ev.target.result });
+    };
+    reader.readAsDataURL(file);
+    // reset so the same file can be re-selected
+    e.target.value = "";
+  };
+
+  const handleDeletePhoto = (e) => {
+    e.stopPropagation();
+    onChange({ ...data, photo: "" });
+  };
 
   return (
     <div className={styles.formSection}>
@@ -73,18 +95,60 @@ const PersonalDetailsForm = ({ data, onChange }) => {
 
         <div className={styles.photoCol}>
           <label className={styles.label}>Photo</label>
-          <div className={styles.photoCircle}>
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#adb5bd"
-              strokeWidth="1.5"
-            >
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-              <circle cx="12" cy="13" r="4" />
-            </svg>
+
+          {/* Hidden file input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+
+          <div className={styles.photoWrapper}>
+            <div className={styles.photoCircle} onClick={handlePhotoClick}>
+              {data.photo ? (
+                <img
+                  src={data.photo}
+                  alt="Profile"
+                  className={styles.photoPreview}
+                />
+              ) : (
+                <>
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#adb5bd"
+                    strokeWidth="1.5"
+                  >
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                    <circle cx="12" cy="13" r="4" />
+                  </svg>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      color: "#adb5bd",
+                      textAlign: "center",
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    Upload photo
+                  </span>
+                </>
+              )}
+            </div>
+
+            {data.photo && (
+              <button
+                className={styles.photoDeleteBtn}
+                onClick={handleDeletePhoto}
+                title="Remove photo"
+              >
+                ×
+              </button>
+            )}
           </div>
         </div>
       </div>
