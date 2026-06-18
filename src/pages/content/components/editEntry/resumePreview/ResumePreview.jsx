@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styles from "./ResumePreview.module.css";
-import { CVPreviewModal } from "../../../../components/modals/index";
-import Arrows from "../../../../assets/Arrows_TopDown.svg";
+import { CVPreviewModal } from "../../../../../components/modals/index";
 
 const ResumePreview = ({ data }) => {
   const [modalOpen, setModalOpen] = useState(false);
