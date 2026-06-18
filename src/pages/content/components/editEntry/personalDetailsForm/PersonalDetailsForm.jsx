@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import styles from "../editor/Editor.module.css";
-import Arrows from "../../../../assets/Arrows_TopDown.svg";
+import Arrows from "../../../.../../../../assets/Arrows_TopDown.svg";
 
 const EXTRA_FIELDS = [
   "LinkedIn",
