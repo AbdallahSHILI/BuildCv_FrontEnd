@@ -1,13 +1,13 @@
-import styles from "../Content.module.css";
-import PersonalDetailsForm from "./PersonalDetailsForm";
+import styles from "./Editor.module.css";
+import PersonalDetailsForm from "../personalDetailsForm/PersonalDetailsForm";
 
-const Editor = ({ data, onChange }) => {
+const Editor = ({ data, onChange, onDone }) => {
   return (
-    <div className={styles.editor}>
+    <div className={styles.editorInner}>
       <PersonalDetailsForm data={data} onChange={onChange} />
 
       <div className={styles.doneBar}>
-        <button className={styles.doneBtn}>
+        <button className={styles.doneBtn} onClick={onDone}>
           <svg
             width="16"
             height="16"
