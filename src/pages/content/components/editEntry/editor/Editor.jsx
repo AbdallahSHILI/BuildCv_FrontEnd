@@ -1,8 +1,24 @@
 import styles from "./Editor.module.css";
 import PersonalDetailsForm from "../personalDetailsForm/PersonalDetailsForm";
 import Summary from "../../summary/Summary";
+import Education from "../../education/Education";
 
-const Editor = ({ section, data, onChange, onDone }) => {
+const Editor = ({ section, data, onChange, onDone, onDelete }) => {
+  if (section === "education") {
+    // Education renders its own card, header, and Done button —
+    // it doesn't use the shared doneBar/customizeRow below.
+    return (
+      <div className={styles.editorInner}>
+        <Education
+          data={data}
+          onChange={onChange}
+          onDone={onDone}
+          onDelete={onDelete}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.editorInner}>
       {section === "summary" ? (

@@ -3,13 +3,22 @@ import { Editor, ResumePreview, PersonalInfoCard } from "./components/index";
 import { AddContentModal } from "../../components/modals/index";
 import styles from "./Content.module.css";
 
-const defaultData = {
+const defaultPersonalData = {
   fullName: "",
   title: "",
   phone: "",
   email: "",
   location: "",
   photo: "",
+};
+
+const defaultEducation = {
+  degree: "",
+  school: "",
+  startDate: "",
+  endDate: "",
+  location: "",
+  description: "",
 };
 
 const SECTION_LABELS = {
@@ -31,12 +40,13 @@ const SECTION_LABELS = {
 };
 
 const Content = () => {
-  const [personalData, setPersonalData] = useState(defaultData);
+  const [personalData, setPersonalData] = useState(defaultPersonalData);
   const [isEditing, setIsEditing] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [addedSections, setAddedSections] = useState([]);
   const [activeSection, setActiveSection] = useState("personalDetails"); // which form Editor shows
   const [summaryText, setSummaryText] = useState("");
+  const [educationData, setEducationData] = useState(defaultEducation);
 
   const handleAddSection = (key) => {
     setAddedSections((prev) => [...prev, key]);
@@ -52,6 +62,24 @@ const Content = () => {
 
   const handleDone = () => setIsEditing(false);
 
+  const handleDeleteSection = (key) => {
+    setAddedSections((prev) => prev.filter((k) => k !== key));
+    setIsEditing(false);
+  };
+
+  // pick the right data/setter for whichever section is active
+  const getActiveData = () => {
+    if (activeSection === "summary") return summaryText;
+    if (activeSection === "education") return educationData;
+    return personalData;
+  };
+
+  const getActiveSetter = () => {
+    if (activeSection === "summary") return setSummaryText;
+    if (activeSection === "education") return setEducationData;
+    return setPersonalData;
+  };
+
   return (
     <div className={styles.page}>
       {/* ── Left panel ── */}
@@ -59,11 +87,10 @@ const Content = () => {
         {isEditing ? (
           <Editor
             section={activeSection}
-            data={activeSection === "summary" ? summaryText : personalData}
-            onChange={
-              activeSection === "summary" ? setSummaryText : setPersonalData
-            }
+            data={getActiveData()}
+            onChange={getActiveSetter()}
             onDone={handleDone}
+            onDelete={() => handleDeleteSection(activeSection)}
           />
         ) : (
           /* Default view: compact card + Add Content button */
@@ -111,7 +138,11 @@ const Content = () => {
       </div>
 
       {/* ── Right panel: live CV preview ── */}
-      <ResumePreview data={personalData} summary={summaryText} />
+      <ResumePreview
+        data={personalData}
+        summary={summaryText}
+        education={educationData}
+      />
 
       {/* ── Add content modal ── */}
       <AddContentModal
