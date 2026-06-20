@@ -1,10 +1,15 @@
 import styles from "./Editor.module.css";
 import PersonalDetailsForm from "../personalDetailsForm/PersonalDetailsForm";
+import Summary from "../../summary/Summary";
 
-const Editor = ({ data, onChange, onDone }) => {
+const Editor = ({ section, data, onChange, onDone }) => {
   return (
     <div className={styles.editorInner}>
-      <PersonalDetailsForm data={data} onChange={onChange} />
+      {section === "summary" ? (
+        <Summary data={data} onChange={onChange} />
+      ) : (
+        <PersonalDetailsForm data={data} onChange={onChange} />
+      )}
 
       <div className={styles.doneBar}>
         <button className={styles.doneBtn} onClick={onDone}>
