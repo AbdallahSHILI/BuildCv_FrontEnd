@@ -12,15 +12,42 @@ const defaultData = {
   photo: "",
 };
 
+const SECTION_LABELS = {
+  summary: "Summary",
+  education: "Education",
+  experience: "Professional Experience",
+  skills: "Skills",
+  languages: "Languages",
+  certificates: "Certificates",
+  interests: "Interests",
+  projects: "Projects",
+  courses: "Courses",
+  awards: "Awards",
+  organisations: "Organisations",
+  publications: "Publications",
+  references: "References",
+  declaration: "Declaration",
+  custom: "Custom",
+};
+
 const Content = () => {
   const [personalData, setPersonalData] = useState(defaultData);
   const [isEditing, setIsEditing] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [addedSections, setAddedSections] = useState([]);
+  const [activeSection, setActiveSection] = useState("personalDetails"); // which form Editor shows
+  const [summaryText, setSummaryText] = useState("");
 
   const handleAddSection = (key) => {
     setAddedSections((prev) => [...prev, key]);
-    // TODO: render the matching section form in the editor panel
+    setAddModalOpen(false);
+    setActiveSection(key);
+    setIsEditing(true);
+  };
+
+  const handleOpenSection = (key) => {
+    setActiveSection(key);
+    setIsEditing(true);
   };
 
   const handleDone = () => setIsEditing(false);
@@ -30,10 +57,12 @@ const Content = () => {
       {/* ── Left panel ── */}
       <div className={styles.editor}>
         {isEditing ? (
-          /* Full personal details form */
           <Editor
-            data={personalData}
-            onChange={setPersonalData}
+            section={activeSection}
+            data={activeSection === "summary" ? summaryText : personalData}
+            onChange={
+              activeSection === "summary" ? setSummaryText : setPersonalData
+            }
             onDone={handleDone}
           />
         ) : (
@@ -41,7 +70,7 @@ const Content = () => {
           <>
             <PersonalInfoCard
               data={personalData}
-              onEdit={() => setIsEditing(true)}
+              onEdit={() => handleOpenSection("personalDetails")}
             />
 
             <button
@@ -64,9 +93,13 @@ const Content = () => {
 
             {/* Added section placeholders */}
             {addedSections.map((key) => (
-              <div key={key} className={styles.sectionPlaceholder}>
+              <div
+                key={key}
+                className={styles.sectionPlaceholder}
+                onClick={() => handleOpenSection(key)}
+              >
                 <span className={styles.sectionPlaceholderLabel}>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
+                  {SECTION_LABELS[key] || key}
                 </span>
                 <span className={styles.sectionPlaceholderHint}>
                   Click to edit
@@ -78,7 +111,7 @@ const Content = () => {
       </div>
 
       {/* ── Right panel: live CV preview ── */}
-      <ResumePreview data={personalData} />
+      <ResumePreview data={personalData} summary={summaryText} />
 
       {/* ── Add content modal ── */}
       <AddContentModal
