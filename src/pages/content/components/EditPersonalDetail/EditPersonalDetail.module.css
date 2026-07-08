@@ -1,0 +1,202 @@
+.editCard {
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 64px);
+  overflow: hidden;
+}
+.editScroll {
+  padding: 28px 28px 8px;
+  overflow-y: auto;
+}
+.editHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.editHeader h2 {
+  font-family: "Sora", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text, #0f172a);
+  margin: 0;
+}
+.tipsBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--primary, #2563eb);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+}
+
+.nameRow {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+.nameRow .fieldGroup {
+  flex: 1;
+}
+.photoGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.photoGroup label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text, #0f172a);
+}
+.photoCircle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--bg, #f8fafc);
+  border: 1px solid var(--border, #e2e8f0);
+  color: var(--text-muted, #64748b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+}
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fieldGroup {
+  margin-bottom: 20px;
+}
+.fieldGroup label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text, #0f172a);
+  margin-bottom: 8px;
+}
+.secondLabel {
+  margin-top: 16px;
+}
+.fieldGroup input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg, #f8fafc);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-family: "DM Sans", sans-serif;
+  color: var(--text, #0f172a);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.fieldGroup input:focus {
+  border-color: var(--primary, #2563eb);
+}
+.fieldGroup input::placeholder {
+  color: var(--text-muted, #64748b);
+}
+
+.inputWithHandle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.inputWithHandle input {
+  flex: 1;
+}
+.inputWithHandle svg {
+  color: var(--text-muted, #64748b);
+  flex-shrink: 0;
+  cursor: grab;
+}
+
+.addDetailsBlock {
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+.addDetailsLabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text, #0f172a);
+  margin-bottom: 12px;
+}
+.chipGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg, #f8fafc);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text, #0f172a);
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+.chip svg {
+  color: var(--text-muted, #64748b);
+}
+.chip:hover {
+  border-color: var(--primary, #2563eb);
+  color: var(--primary, #2563eb);
+}
+.chipOutline {
+  background: none;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text, #0f172a);
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+}
+
+.editFooter {
+  padding: 18px 28px;
+  border-top: 1px solid var(--border, #e2e8f0);
+}
+.doneBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--primary, #2563eb);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+  transition: background 0.2s;
+}
+.doneBtn:hover {
+  background: var(--primary-hover, #1d4ed8);
+}
