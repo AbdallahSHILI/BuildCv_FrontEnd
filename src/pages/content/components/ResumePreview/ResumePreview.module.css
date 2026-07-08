@@ -1,0 +1,71 @@
+.previewSheet {
+  width: 100%;
+  max-width: 720px;
+  height: fit-content;
+  min-height: 900px;
+  background: var(--surface, #fff);
+  border-radius: 4px;
+  box-shadow:
+    0 1px 4px rgba(15, 23, 42, 0.06),
+    0 12px 32px rgba(15, 23, 42, 0.06);
+  padding: 56px;
+  box-sizing: border-box;
+}
+.previewEmpty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted, #64748b);
+  font-size: 14px;
+  min-height: 788px;
+}
+
+.previewHeader {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.previewAvatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.previewName {
+  font-family: "Sora", sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--text, #0f172a);
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+.previewTitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--primary, #2563eb);
+  margin: 0 0 12px;
+}
+.previewContactRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.previewContactRow span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted, #64748b);
+}
+.previewContactRow svg {
+  color: var(--text-muted, #64748b);
+}
+
+@media (max-width: 960px) {
+  .previewSheet {
+    padding: 32px;
+    min-height: auto;
+  }
+}
