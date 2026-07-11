@@ -1,0 +1,25 @@
+.footer {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.doneBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #ec1e79 0%, #f2704b 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.doneBtn:hover {
+  filter: brightness(1.05);
+}
