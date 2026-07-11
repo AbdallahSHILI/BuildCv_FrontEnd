@@ -1,7 +1,11 @@
 import { Mail, Phone, Pin, Camera, Pencil, Plus } from "../Icons";
 import styles from "./SummaryCard.module.css";
 
-export default function SummaryCard({ details, onEdit }) {
+//ResumePreview lives in the right panel. It's the actual resume document — the blank page that's
+// meant to look like what gets exported/printed. It has no click behavior, no edit button, nothing interactive;
+// it just renders whatever is in details as a formatted resume header (photo, name, title, contact line).
+
+export default function SummaryCard({ details, onEdit, onAddContent }) {
   return (
     <>
       <div className={styles.summaryCard} onClick={onEdit}>
@@ -57,7 +61,7 @@ export default function SummaryCard({ details, onEdit }) {
         </div>
       </div>
 
-      <button className={styles.addContentBtn}>
+      <button className={styles.addContentBtn} onClick={onAddContent}>
         <Plus />
         Add Content
       </button>
