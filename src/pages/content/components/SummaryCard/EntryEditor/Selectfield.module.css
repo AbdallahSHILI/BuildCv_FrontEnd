@@ -1,0 +1,42 @@
+.field {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1b3a;
+  margin-bottom: 8px;
+}
+
+.selectWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select {
+  width: 100%;
+  box-sizing: border-box;
+  appearance: none;
+  background: #f1f1f4;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 40px 14px 16px;
+  font-size: 14px;
+  color: #9b9ba6;
+  cursor: pointer;
+}
+
+.select:valid {
+  color: #1e1b3a;
+}
+
+.chevron {
+  position: absolute;
+  right: 14px;
+  pointer-events: none;
+  color: #1e1b3a;
+  display: flex;
+}
