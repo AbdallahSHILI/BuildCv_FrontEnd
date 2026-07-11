@@ -1,4 +1,4 @@
-import { LinkIcon } from "./icons";
+import { LinkIcon } from "../icons";
 import styles from "./TextField.module.css";
 
 // Labeled text input. Pass `trailingAction` to render a small button

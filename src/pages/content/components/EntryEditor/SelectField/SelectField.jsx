@@ -1,4 +1,4 @@
-import { ChevronDownIcon } from "./icons";
+import { ChevronDownIcon } from "../icons";
 import styles from "./SelectField.module.css";
 
 // Labeled dropdown. `options` is an array of { value, label }.

@@ -1,4 +1,4 @@
-import { CheckIcon } from "./icons";
+import { CheckIcon } from "../icons";
 import styles from "./EditEntryFooter.module.css";
 
 // Sticky footer with the gradient "Done" button, shared by every
