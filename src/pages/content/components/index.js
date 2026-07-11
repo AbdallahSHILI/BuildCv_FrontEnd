@@ -1,3 +1,5 @@
-export { default as SummaryCard } from "./SummaryCard";
-export { default as EditPersonalDetail } from "./EditPersonalDetail";
-export { default as ResumePreview } from "./ResumePreview";
+export { default as SummaryCard } from "./SummaryCard/SummaryCard";
+export { default as EditPersonalDetail } from "./EditPersonalDetail/EditPersonalDetail";
+export { default as ResumePreview } from "./ResumePreview/ResumePreview";
+export { default as Summary } from "./Summary/Summary";
+export { default as AddContentModal } from "../../../components/modals/Addcontentmodal/Addcontentmodal";

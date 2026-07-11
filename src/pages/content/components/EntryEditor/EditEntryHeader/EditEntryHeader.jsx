@@ -1,4 +1,4 @@
-import { LightbulbIcon, EyeIcon, TrashIcon } from "./icons";
+import { LightbulbIcon, EyeIcon, TrashIcon } from "../icons";
 import styles from "./EditEntryHeader.module.css";
 
 // Header chrome shared by every "Edit Entry" panel: a title, an optional

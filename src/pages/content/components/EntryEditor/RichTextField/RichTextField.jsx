@@ -9,7 +9,7 @@ import {
   AlignRightIcon,
   AlignJustifyIcon,
   RobotIcon,
-} from "./icons";
+} from "../icons";
 import styles from "./RichTextField.module.css";
 
 const ALIGN_OPTIONS = [
