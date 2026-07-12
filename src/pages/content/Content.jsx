@@ -6,6 +6,7 @@ import {
   AddContentModal,
   Summary,
   Education,
+  ProfessionalExperience,
 } from "./components";
 import { EMPTY_DETAILS } from "./data";
 import styles from "./Content.module.css";
@@ -25,6 +26,15 @@ export default function Content() {
     location: "",
     description: "",
   });
+  const [professionalExperienceEntry, setProfessionalExperienceEntry] =
+    useState({
+      jobTitle: "",
+      employer: "",
+      startDate: "",
+      endDate: "",
+      location: "",
+      description: "",
+    });
 
   const updateField = (field, value) =>
     setDetails((d) => ({ ...d, [field]: value }));
@@ -66,6 +76,13 @@ export default function Content() {
             onChange={setEducationEntry}
             onDone={closeActiveSection}
             onDelete={() => removeSection("education")}
+          />
+        ) : activeSection === "experience" ? (
+          <ProfessionalExperience
+            entry={professionalExperienceEntry}
+            onChange={setProfessionalExperienceEntry}
+            onDone={closeActiveSection}
+            onDelete={() => removeSection("experience")}
           />
         ) : (
           <SummaryCard
