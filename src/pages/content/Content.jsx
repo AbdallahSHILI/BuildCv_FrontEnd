@@ -7,6 +7,7 @@ import {
   Summary,
   Education,
   ProfessionalExperience,
+  Skills,
 } from "./components";
 import { EMPTY_DETAILS } from "./data";
 import styles from "./Content.module.css";
@@ -35,6 +36,11 @@ export default function Content() {
       location: "",
       description: "",
     });
+  const [skillsEntry, setSkillsEntry] = useState({
+    skill: "",
+    info: "",
+    level: "",
+  });
 
   const updateField = (field, value) =>
     setDetails((d) => ({ ...d, [field]: value }));
@@ -83,6 +89,13 @@ export default function Content() {
             onChange={setProfessionalExperienceEntry}
             onDone={closeActiveSection}
             onDelete={() => removeSection("experience")}
+          />
+        ) : activeSection === "skills" ? (
+          <Skills
+            entry={skillsEntry}
+            onChange={setSkillsEntry}
+            onDone={closeActiveSection}
+            onDelete={() => removeSection("skills")}
           />
         ) : (
           <SummaryCard
