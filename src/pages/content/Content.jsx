@@ -3,11 +3,12 @@ import {
   SummaryCard,
   EditPersonalDetail,
   ResumePreview,
+  AddContentModal,
   Summary,
+  Education,
 } from "./components";
 import { EMPTY_DETAILS } from "./data";
 import styles from "./Content.module.css";
-import AddContentModal from "../../components/modals/Addcontentmodal/Addcontentmodal";
 
 export default function Content() {
   const [details, setDetails] = useState(EMPTY_DETAILS);
@@ -16,6 +17,14 @@ export default function Content() {
   const [addedSections, setAddedSections] = useState([]);
   const [activeSection, setActiveSection] = useState(null);
   const [summaryEntry, setSummaryEntry] = useState({ summary: "" });
+  const [educationEntry, setEducationEntry] = useState({
+    degree: "",
+    school: "",
+    startDate: "",
+    endDate: "",
+    location: "",
+    description: "",
+  });
 
   const updateField = (field, value) =>
     setDetails((d) => ({ ...d, [field]: value }));
@@ -50,6 +59,13 @@ export default function Content() {
             onChange={setSummaryEntry}
             onDone={closeActiveSection}
             onDelete={() => removeSection("summary")}
+          />
+        ) : activeSection === "education" ? (
+          <Education
+            entry={educationEntry}
+            onChange={setEducationEntry}
+            onDone={closeActiveSection}
+            onDelete={() => removeSection("education")}
           />
         ) : (
           <SummaryCard
