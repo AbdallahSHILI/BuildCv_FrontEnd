@@ -9,6 +9,7 @@ import {
   ProfessionalExperience,
   Skills,
   Languages,
+  Certificates,
 } from "./components";
 import { EMPTY_DETAILS } from "./data";
 import styles from "./Content.module.css";
@@ -46,6 +47,10 @@ export default function Content() {
     language: "",
     additionalInfo: "",
     level: "",
+  });
+  const [certificatesEntry, setCertificatesEntry] = useState({
+    certificate: "",
+    additionalInfo: "",
   });
 
   const updateField = (field, value) =>
@@ -109,6 +114,13 @@ export default function Content() {
             onChange={setLanguagesEntry}
             onDone={closeActiveSection}
             onDelete={() => removeSection("languages")}
+          />
+        ) : activeSection === "certificates" ? (
+          <Certificates
+            entry={certificatesEntry}
+            onChange={setCertificatesEntry}
+            onDone={closeActiveSection}
+            onDelete={() => removeSection("certificates")}
           />
         ) : (
           <SummaryCard
