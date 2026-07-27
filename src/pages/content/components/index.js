@@ -8,3 +8,4 @@ export { default as ProfessionalExperience } from "./ProfessionalExperience/Prof
 export { default as Skills } from "./Skills/Skills";
 export { default as Languages } from "./LanguagesForm/Languages";
 export { default as Certificates } from "./CertificationsForm/Certifications";
+export { default as Interests } from "./Interests/Interests";
