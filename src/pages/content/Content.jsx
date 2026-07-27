@@ -8,6 +8,7 @@ import {
   Education,
   ProfessionalExperience,
   Skills,
+  Languages,
 } from "./components";
 import { EMPTY_DETAILS } from "./data";
 import styles from "./Content.module.css";
@@ -39,6 +40,11 @@ export default function Content() {
   const [skillsEntry, setSkillsEntry] = useState({
     skill: "",
     info: "",
+    level: "",
+  });
+  const [languagesEntry, setLanguagesEntry] = useState({
+    language: "",
+    additionalInfo: "",
     level: "",
   });
 
@@ -96,6 +102,13 @@ export default function Content() {
             onChange={setSkillsEntry}
             onDone={closeActiveSection}
             onDelete={() => removeSection("skills")}
+          />
+        ) : activeSection === "languages" ? (
+          <Languages
+            entry={languagesEntry}
+            onChange={setLanguagesEntry}
+            onDone={closeActiveSection}
+            onDelete={() => removeSection("languages")}
           />
         ) : (
           <SummaryCard
