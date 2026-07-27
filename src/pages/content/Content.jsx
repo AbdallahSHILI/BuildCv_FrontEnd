@@ -10,6 +10,7 @@ import {
   Skills,
   Languages,
   Certificates,
+  Interests,
 } from "./components";
 import { EMPTY_DETAILS } from "./data";
 import styles from "./Content.module.css";
@@ -50,6 +51,10 @@ export default function Content() {
   });
   const [certificatesEntry, setCertificatesEntry] = useState({
     certificate: "",
+    additionalInfo: "",
+  });
+  const [interestsEntry, setInterestsEntry] = useState({
+    interest: "",
     additionalInfo: "",
   });
 
@@ -121,6 +126,13 @@ export default function Content() {
             onChange={setCertificatesEntry}
             onDone={closeActiveSection}
             onDelete={() => removeSection("certificates")}
+          />
+        ) : activeSection === "interests" ? (
+          <Interests
+            entry={interestsEntry}
+            onChange={setInterestsEntry}
+            onDone={closeActiveSection}
+            onDelete={() => removeSection("interests")}
           />
         ) : (
           <SummaryCard
