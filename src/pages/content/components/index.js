@@ -6,3 +6,4 @@ export { default as AddContentModal } from "../../../components/modals/Addconten
 export { default as Education } from "./Education/Education";
 export { default as ProfessionalExperience } from "./ProfessionalExperience/ProfessionalExperience";
 export { default as Skills } from "./Skills/Skills";
+export { default as Languages } from "./LanguagesFolder/Languages";
