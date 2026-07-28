@@ -9,3 +9,6 @@ export { default as Skills } from "./Skills/Skills";
 export { default as Languages } from "./LanguagesForm/Languages";
 export { default as Certificates } from "./CertificationsForm/Certifications";
 export { default as Interests } from "./Interests/Interests";
+export { default as Projects } from "./Projects/Projects";
+export { default as Awards } from "./Awards/Awards";
+export { default as Courses } from "./Courses/Courses";

@@ -11,6 +11,9 @@ import {
   Languages,
   Certificates,
   Interests,
+  Projects,
+  Courses,
+  Awards,
 } from "./components";
 import { EMPTY_DETAILS } from "./data";
 import styles from "./Content.module.css";
@@ -56,6 +59,31 @@ export default function Content() {
   const [interestsEntry, setInterestsEntry] = useState({
     interest: "",
     additionalInfo: "",
+  });
+  const [projectsEntry, setProjectsEntry] = useState({
+    projectTitle: "",
+    subTitle: "",
+    startDate: "",
+    endDate: "",
+    description: "",
+  });
+  const [coursesEntry, setCoursesEntry] = useState({
+    courseTitle: "",
+    institution: "",
+    startDate: "",
+    endDate: "",
+    location: "",
+    description: "",
+  });
+  const [awardsEntry, setAwardsEntry] = useState({
+    award: "",
+    issuer: "",
+    day: "",
+    month: "",
+    year: "",
+    hideDay: false,
+    hideMonth: false,
+    description: "",
   });
 
   const updateField = (field, value) =>
@@ -133,6 +161,27 @@ export default function Content() {
             onChange={setInterestsEntry}
             onDone={closeActiveSection}
             onDelete={() => removeSection("interests")}
+          />
+        ) : activeSection === "projects" ? (
+          <Projects
+            entry={projectsEntry}
+            onChange={setProjectsEntry}
+            onDone={closeActiveSection}
+            onDelete={() => removeSection("projects")}
+          />
+        ) : activeSection === "courses" ? (
+          <Courses
+            entry={coursesEntry}
+            onChange={setCoursesEntry}
+            onDone={closeActiveSection}
+            onDelete={() => removeSection("courses")}
+          />
+        ) : activeSection === "awards" ? (
+          <Awards
+            entry={awardsEntry}
+            onChange={setAwardsEntry}
+            onDone={closeActiveSection}
+            onDelete={() => removeSection("awards")}
           />
         ) : (
           <SummaryCard
