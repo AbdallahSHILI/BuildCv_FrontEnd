@@ -1,6 +1,13 @@
 import { useRef, useState } from "react";
 import { Camera, Check, Plus, UpDown, Bulb } from "../Icons";
-import { EXTRA_FIELDS } from "./data";
+import {
+  QUICK_FIELDS,
+  PERSONAL_DETAILS_FIELDS,
+  PERSONAL_DETAILS_COLLAPSED_COUNT,
+  LINKS_FIELDS,
+  LINKS_COLLAPSED_COUNT,
+  getFieldByKey,
+} from "./data";
 import styles from "./EditPersonalDetail.module.css";
 
 export default function EditPersonalDetail({
@@ -11,7 +18,15 @@ export default function EditPersonalDetail({
 }) {
   const [activeExtras, setActiveExtras] = useState([]);
   const [extraValues, setExtraValues] = useState({});
-  const [showAllExtras, setShowAllExtras] = useState(false);
+  // false = flat "quick" grid (screenshot 1). true = split into
+  // Personal details / Links categories (screenshot 2).
+  const [categorized, setCategorized] = useState(false);
+  // Once categorized, each category can independently expand to its
+  // full list (screenshot 3 for Personal details, same idea for Links).
+  const [expandedCategories, setExpandedCategories] = useState({
+    personal: false,
+    links: false,
+  });
   const fileInputRef = useRef(null);
 
   const handlePhoto = (e) => {
@@ -26,9 +41,26 @@ export default function EditPersonalDetail({
     if (!activeExtras.includes(key)) setActiveExtras((prev) => [...prev, key]);
   };
 
-  const visibleExtraButtons = showAllExtras
-    ? EXTRA_FIELDS
-    : EXTRA_FIELDS.slice(0, 6);
+  const expandCategory = (category) =>
+    setExpandedCategories((prev) => ({ ...prev, [category]: true }));
+
+  const visibleQuickFields = QUICK_FIELDS.filter(
+    (f) => !activeExtras.includes(f.key),
+  );
+
+  const availablePersonalFields = PERSONAL_DETAILS_FIELDS.filter(
+    (f) => !activeExtras.includes(f.key),
+  );
+  const visiblePersonalFields = expandedCategories.personal
+    ? availablePersonalFields
+    : availablePersonalFields.slice(0, PERSONAL_DETAILS_COLLAPSED_COUNT);
+
+  const availableLinksFields = LINKS_FIELDS.filter(
+    (f) => !activeExtras.includes(f.key),
+  );
+  const visibleLinksFields = expandedCategories.links
+    ? availableLinksFields
+    : availableLinksFields.slice(0, LINKS_COLLAPSED_COUNT);
 
   return (
     <div className={styles.editCard}>
@@ -126,7 +158,8 @@ export default function EditPersonalDetail({
         </div>
 
         {activeExtras.map((key) => {
-          const field = EXTRA_FIELDS.find((f) => f.key === key);
+          const field = getFieldByKey(key);
+          if (!field) return null;
           return (
             <div className={styles.fieldGroup} key={key}>
               <label>{field.label}</label>
@@ -144,10 +177,10 @@ export default function EditPersonalDetail({
 
         <div className={styles.addDetailsBlock}>
           <span className={styles.addDetailsLabel}>Add details</span>
-          <div className={styles.chipGrid}>
-            {visibleExtraButtons
-              .filter((f) => !activeExtras.includes(f.key))
-              .map((f) => (
+
+          {!categorized ? (
+            <div className={styles.chipGrid}>
+              {visibleQuickFields.map((f) => (
                 <button
                   key={f.key}
                   className={styles.chip}
@@ -157,15 +190,69 @@ export default function EditPersonalDetail({
                   {f.label}
                 </button>
               ))}
-            {!showAllExtras && (
               <button
                 className={styles.chipOutline}
-                onClick={() => setShowAllExtras(true)}
+                onClick={() => setCategorized(true)}
               >
                 Show More
               </button>
-            )}
-          </div>
+            </div>
+          ) : (
+            <>
+              <div className={styles.categoryBlock}>
+                <span className={styles.categoryLabel}>Personal details</span>
+                <div className={styles.chipGrid}>
+                  {visiblePersonalFields.map((f) => (
+                    <button
+                      key={f.key}
+                      className={styles.chip}
+                      onClick={() => addExtra(f.key)}
+                    >
+                      <Plus />
+                      {f.label}
+                    </button>
+                  ))}
+                  {!expandedCategories.personal &&
+                    availablePersonalFields.length >
+                      PERSONAL_DETAILS_COLLAPSED_COUNT && (
+                      <button
+                        className={styles.chipOutline}
+                        onClick={() => expandCategory("personal")}
+                      >
+                        Show More
+                      </button>
+                    )}
+                </div>
+              </div>
+
+              <div className={styles.categoryBlock}>
+                <span className={styles.categoryLabel}>
+                  Links / social profiles
+                </span>
+                <div className={styles.chipGrid}>
+                  {visibleLinksFields.map((f) => (
+                    <button
+                      key={f.key}
+                      className={styles.chip}
+                      onClick={() => addExtra(f.key)}
+                    >
+                      <Plus />
+                      {f.label}
+                    </button>
+                  ))}
+                  {!expandedCategories.links &&
+                    availableLinksFields.length > LINKS_COLLAPSED_COUNT && (
+                      <button
+                        className={styles.chipOutline}
+                        onClick={() => expandCategory("links")}
+                      >
+                        Show More
+                      </button>
+                    )}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
