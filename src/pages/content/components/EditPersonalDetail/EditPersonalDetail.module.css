@@ -1,7 +1,10 @@
 .editCard {
   background: var(--surface, #fff);
   border: 1px solid var(--border, #e2e8f0);
-  border-radius: 14px;
+  border-radius: 16px;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px rgba(15, 23, 42, 0.06);
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 64px);
@@ -10,6 +13,11 @@
 .editScroll {
   padding: 28px 28px 8px;
   overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/legacy Edge */
+}
+.editScroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge (Chromium) */
 }
 .editHeader {
   display: flex;
@@ -23,23 +31,34 @@
   font-weight: 700;
   color: var(--text, #0f172a);
   margin: 0;
+  letter-spacing: -0.01em;
 }
 .tipsBtn {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: none;
+  background: var(--primary-tint, #eff6ff);
   border: none;
+  border-radius: 999px;
+  padding: 7px 14px;
   color: var(--primary, #2563eb);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   font-family: "DM Sans", sans-serif;
+  transition: background 0.15s ease;
+}
+.tipsBtn:hover {
+  background: var(--primary-tint-hover, #dbeafe);
+}
+.tipsBtn:focus-visible {
+  outline: 2px solid var(--primary, #2563eb);
+  outline-offset: 2px;
 }
 
 .nameRow {
   display: flex;
-  gap: 16px;
+  gap: 20px;
   align-items: flex-start;
   margin-bottom: 4px;
 }
@@ -62,7 +81,7 @@
   height: 76px;
   border-radius: 50%;
   background: var(--bg, #f8fafc);
-  border: 1px solid var(--border, #e2e8f0);
+  border: 1px dashed var(--border-strong, #cbd5e1);
   color: var(--text-muted, #64748b);
   display: flex;
   align-items: center;
@@ -70,6 +89,18 @@
   cursor: pointer;
   overflow: hidden;
   padding: 0;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+.photoCircle:hover {
+  border-color: var(--primary, #2563eb);
+  background: var(--primary-tint, #eff6ff);
+  color: var(--primary, #2563eb);
+}
+.photoCircle:focus-visible {
+  outline: 2px solid var(--primary, #2563eb);
+  outline-offset: 2px;
 }
 .avatarImg {
   width: 100%;
@@ -101,10 +132,16 @@
   font-family: "DM Sans", sans-serif;
   color: var(--text, #0f172a);
   outline: none;
-  transition: border-color 0.15s;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.fieldGroup input:hover {
+  border-color: var(--border-strong, #cbd5e1);
 }
 .fieldGroup input:focus {
   border-color: var(--primary, #2563eb);
+  box-shadow: 0 0 0 3px var(--primary-tint, #eff6ff);
 }
 .fieldGroup input::placeholder {
   color: var(--text-muted, #64748b);
@@ -124,22 +161,53 @@
   cursor: grab;
 }
 
+/* --- Add details section --- */
 .addDetailsBlock {
-  margin-top: 4px;
+  margin-top: 20px;
+  padding-top: 20px;
   margin-bottom: 12px;
+  border-top: 1px solid var(--border, #e2e8f0);
 }
 .addDetailsLabel {
   display: block;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text, #0f172a);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
+
 .chipGrid {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
+
+/* Each category (Personal details / Links) gets its own breathing room
+   and a clear heading, so the two lists no longer read as one run-on
+   block of chips. */
+.categoryBlock {
+  margin-bottom: 24px;
+}
+.categoryBlock:last-child {
+  margin-bottom: 4px;
+}
+.categoryLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Sora", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted, #64748b);
+  margin-bottom: 12px;
+}
+.categoryBlock:not(:first-child) .categoryLabel {
+  padding-top: 20px;
+  border-top: 1px dashed var(--border, #e2e8f0);
+}
+
 .chip {
   display: flex;
   align-items: center;
@@ -147,33 +215,59 @@
   background: var(--bg, #f8fafc);
   border: 1px solid var(--border, #e2e8f0);
   border-radius: 8px;
-  padding: 8px 14px;
+  padding: 9px 14px;
   font-size: 13px;
   font-weight: 500;
   color: var(--text, #0f172a);
   cursor: pointer;
   font-family: "DM Sans", sans-serif;
   transition:
-    border-color 0.15s,
-    color 0.15s;
+    border-color 0.15s ease,
+    color 0.15s ease,
+    background 0.15s ease,
+    transform 0.1s ease;
 }
 .chip svg {
   color: var(--text-muted, #64748b);
+  transition: color 0.15s ease;
 }
 .chip:hover {
   border-color: var(--primary, #2563eb);
   color: var(--primary, #2563eb);
+  background: var(--primary-tint, #eff6ff);
 }
+.chip:hover svg {
+  color: var(--primary, #2563eb);
+}
+.chip:active {
+  transform: scale(0.97);
+}
+.chip:focus-visible {
+  outline: 2px solid var(--primary, #2563eb);
+  outline-offset: 2px;
+}
+
 .chipOutline {
   background: none;
   border: 1px solid var(--border, #e2e8f0);
   border-radius: 8px;
-  padding: 8px 14px;
+  padding: 9px 14px;
   font-size: 13px;
   font-weight: 700;
   color: var(--text, #0f172a);
   cursor: pointer;
   font-family: "DM Sans", sans-serif;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+.chipOutline:hover {
+  border-color: var(--border-strong, #cbd5e1);
+  background: var(--bg, #f8fafc);
+}
+.chipOutline:focus-visible {
+  outline: 2px solid var(--primary, #2563eb);
+  outline-offset: 2px;
 }
 
 .editFooter {
@@ -195,8 +289,29 @@
   font-weight: 700;
   cursor: pointer;
   font-family: "DM Sans", sans-serif;
-  transition: background 0.2s;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
 }
 .doneBtn:hover {
   background: var(--primary-hover, #1d4ed8);
+}
+.doneBtn:active {
+  transform: scale(0.99);
+}
+.doneBtn:focus-visible {
+  outline: 2px solid var(--primary, #2563eb);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tipsBtn,
+  .photoCircle,
+  .fieldGroup input,
+  .chip,
+  .chip svg,
+  .chipOutline,
+  .doneBtn {
+    transition: none;
+  }
 }
