@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Camera, Check, Plus, UpDown, Bulb } from "../Icons";
+import { Camera, Check, Plus, Bulb } from "../Icons";
 import {
   QUICK_FIELDS,
   PERSONAL_DETAILS_FIELDS,
@@ -9,6 +9,28 @@ import {
   getFieldByKey,
 } from "./data";
 import styles from "./EditPersonalDetail.module.css";
+import { ReactComponent as Reorder } from "../../../../assets/Arrows_TopDown.svg";
+
+// Config for the three core fields whose order the user can rearrange
+// (email / phone / location). Add an entry here if another field should
+// become reorderable the same way.
+const CORE_FIELDS = {
+  email: {
+    label: "Email",
+    type: "email",
+    placeholder: "Enter email",
+  },
+  phone: {
+    label: "Phone",
+    type: "tel",
+    placeholder: "Enter Phone",
+  },
+  location: {
+    label: "Location",
+    type: "text",
+    placeholder: "City, Country",
+  },
+};
 
 export default function EditPersonalDetail({
   details,
@@ -18,6 +40,15 @@ export default function EditPersonalDetail({
 }) {
   const [activeExtras, setActiveExtras] = useState([]);
   const [extraValues, setExtraValues] = useState({});
+  // Display order of the core fields. Reordered by dragging the arrow icon.
+  const [fieldOrder, setFieldOrder] = useState(["email", "phone", "location"]);
+  // Key of the field currently being dragged (or null).
+  const [draggingKey, setDraggingKey] = useState(null);
+  // Live vertical offset (px) applied to the dragged row so it follows the pointer.
+  const [dragOffsetY, setDragOffsetY] = useState(0);
+
+  const itemRefs = useRef({}); // key -> row DOM node
+  const dragInfoRef = useRef(null); // { startY, slots, startIndex, currentIndex }
   // false = flat "quick" grid (screenshot 1). true = split into
   // Personal details / Links categories (screenshot 2).
   const [categorized, setCategorized] = useState(false);
@@ -39,6 +70,66 @@ export default function EditPersonalDetail({
 
   const addExtra = (key) => {
     if (!activeExtras.includes(key)) setActiveExtras((prev) => [...prev, key]);
+  };
+
+  const swapOrder = (i, j) =>
+    setFieldOrder((prev) => {
+      const next = [...prev];
+      [next[i], next[j]] = [next[j], next[i]];
+      return next;
+    });
+
+  const handleDragPointerDown = (e, key) => {
+    e.preventDefault();
+    e.currentTarget.setPointerCapture(e.pointerId);
+
+    // Snapshot every row's current position before anything moves, so we
+    // have fixed reference points ("slots") to compare against as the
+    // pointer travels.
+    const slots = fieldOrder.map((k) => {
+      const rect = itemRefs.current[k].getBoundingClientRect();
+      return { top: rect.top, centerY: rect.top + rect.height / 2 };
+    });
+
+    dragInfoRef.current = {
+      startY: e.clientY,
+      slots,
+      startIndex: fieldOrder.indexOf(key),
+      currentIndex: fieldOrder.indexOf(key),
+    };
+    setDraggingKey(key);
+    setDragOffsetY(0);
+  };
+
+  const handleDragPointerMove = (e) => {
+    const info = dragInfoRef.current;
+    if (!info) return;
+
+    const deltaY = e.clientY - info.startY;
+    setDragOffsetY(deltaY);
+
+    const draggedCenterNow = info.slots[info.startIndex].centerY + deltaY;
+    const { currentIndex, slots } = info;
+
+    if (
+      currentIndex > 0 &&
+      draggedCenterNow < slots[currentIndex - 1].centerY
+    ) {
+      swapOrder(currentIndex, currentIndex - 1);
+      info.currentIndex -= 1;
+    } else if (
+      currentIndex < slots.length - 1 &&
+      draggedCenterNow > slots[currentIndex + 1].centerY
+    ) {
+      swapOrder(currentIndex, currentIndex + 1);
+      info.currentIndex += 1;
+    }
+  };
+
+  const handleDragPointerUp = () => {
+    dragInfoRef.current = null;
+    setDraggingKey(null);
+    setDragOffsetY(0);
   };
 
   const expandCategory = (category) =>
@@ -118,44 +209,45 @@ export default function EditPersonalDetail({
           </div>
         </div>
 
-        <div className={styles.fieldGroup}>
-          <label>Email</label>
-          <div className={styles.inputWithHandle}>
-            <input
-              type="email"
-              placeholder="Enter email"
-              value={details.email}
-              onChange={(e) => onChange("email", e.target.value)}
-            />
-            <UpDown />
-          </div>
-        </div>
-
-        <div className={styles.fieldGroup}>
-          <label>Phone</label>
-          <div className={styles.inputWithHandle}>
-            <input
-              type="tel"
-              placeholder="Enter Phone"
-              value={details.phone}
-              onChange={(e) => onChange("phone", e.target.value)}
-            />
-            <UpDown />
-          </div>
-        </div>
-
-        <div className={styles.fieldGroup}>
-          <label>Location</label>
-          <div className={styles.inputWithHandle}>
-            <input
-              type="text"
-              placeholder="City, Country"
-              value={details.location}
-              onChange={(e) => onChange("location", e.target.value)}
-            />
-            <UpDown />
-          </div>
-        </div>
+        {fieldOrder.map((key) => {
+          const field = CORE_FIELDS[key];
+          const isDragging = draggingKey === key;
+          return (
+            <div
+              className={`${styles.fieldGroup} ${isDragging ? styles.fieldGroupDragging : ""}`}
+              key={key}
+              ref={(el) => {
+                itemRefs.current[key] = el;
+              }}
+              style={
+                isDragging
+                  ? { transform: `translateY(${dragOffsetY}px)` }
+                  : undefined
+              }
+            >
+              <label>{field.label}</label>
+              <div className={styles.inputWithHandle}>
+                <input
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  value={details[key]}
+                  onChange={(e) => onChange(key, e.target.value)}
+                />
+                <button
+                  type="button"
+                  className={styles.reorderBtn}
+                  aria-label={`Drag to reorder ${field.label}`}
+                  onPointerDown={(e) => handleDragPointerDown(e, key)}
+                  onPointerMove={handleDragPointerMove}
+                  onPointerUp={handleDragPointerUp}
+                  onPointerCancel={handleDragPointerUp}
+                >
+                  <Reorder />
+                </button>
+              </div>
+            </div>
+          );
+        })}
 
         {activeExtras.map((key) => {
           const field = getFieldByKey(key);
