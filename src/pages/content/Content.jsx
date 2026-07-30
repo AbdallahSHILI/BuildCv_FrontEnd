@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useFieldReorder from "./components/EditPersonalDetail/hooks/useFieldReorder";
 import {
   SummaryCard,
   EditPersonalDetail,
@@ -85,6 +86,15 @@ export default function Content() {
     hideMonth: false,
     description: "",
   });
+  const {
+    fieldOrder,
+    draggingKey,
+    dragOffsetY,
+    setItemRef,
+    handleDragPointerDown,
+    handleDragPointerMove,
+    handleDragPointerUp,
+  } = useFieldReorder(["email", "phone", "location"]);
 
   const updateField = (field, value) =>
     setDetails((d) => ({ ...d, [field]: value }));
@@ -112,6 +122,13 @@ export default function Content() {
             onChange={updateField}
             onPhotoChange={updatePhoto}
             onDone={() => setIsEditing(false)}
+            fieldOrder={fieldOrder}
+            draggingKey={draggingKey}
+            dragOffsetY={dragOffsetY}
+            setItemRef={setItemRef}
+            onDragPointerDown={handleDragPointerDown}
+            onDragPointerMove={handleDragPointerMove}
+            onDragPointerUp={handleDragPointerUp}
           />
         ) : activeSection === "summary" ? (
           <Summary
@@ -193,7 +210,7 @@ export default function Content() {
       </div>
 
       <div className={styles.rightPanel}>
-        <ResumePreview details={details} />
+        <ResumePreview details={details} fieldOrder={fieldOrder} />
       </div>
 
       <AddContentModal
