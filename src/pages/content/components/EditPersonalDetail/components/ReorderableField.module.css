@@ -1,0 +1,59 @@
+.inputWithHandle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.inputWithHandle input {
+  flex: 1;
+}
+.fieldGroupDragging {
+  position: relative;
+  z-index: 20;
+  cursor: grabbing;
+  transition: none; /* follow the pointer immediately, no lag */
+}
+.fieldGroupDragging .inputWithHandle input {
+  background: var(--surface, #fff);
+  border-color: var(--primary, #2563eb);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.14);
+}
+
+.reorderBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-muted, #64748b);
+  cursor: grab;
+  touch-action: none; /* let us handle drag via pointer events, not scrolling */
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.reorderBtn svg {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+.reorderBtn:hover {
+  background: var(--bg, #f8fafc);
+  color: var(--primary, #2563eb);
+}
+.reorderBtn:active {
+  cursor: grabbing;
+}
+.reorderBtn:focus-visible {
+  outline: 2px solid var(--primary, #2563eb);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reorderBtn {
+    transition: none;
+  }
+}

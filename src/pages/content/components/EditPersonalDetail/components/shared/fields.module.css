@@ -1,0 +1,44 @@
+.fieldGroup {
+  margin-bottom: 20px;
+}
+.fieldGroup label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text, #0f172a);
+  margin-bottom: 8px;
+}
+.secondLabel {
+  margin-top: 16px;
+}
+.fieldGroup input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg, #f8fafc);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-family: "DM Sans", sans-serif;
+  color: var(--text, #0f172a);
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.fieldGroup input:hover {
+  border-color: var(--border-strong, #cbd5e1);
+}
+.fieldGroup input:focus {
+  border-color: var(--primary, #2563eb);
+  box-shadow: 0 0 0 3px var(--primary-tint, #eff6ff);
+}
+.fieldGroup input::placeholder {
+  color: var(--text-muted, #64748b);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fieldGroup input {
+    transition: none;
+  }
+}

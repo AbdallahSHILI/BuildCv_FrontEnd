@@ -1,0 +1,74 @@
+.addDetailsBlock {
+  margin-top: 20px;
+  padding-top: 20px;
+  margin-bottom: 12px;
+  border-top: 1px solid var(--border, #e2e8f0);
+}
+.addDetailsLabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text, #0f172a);
+  margin-bottom: 14px;
+}
+
+.chipGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Each category (Personal details / Links) gets its own breathing room
+   and a clear heading, so the two lists no longer read as one run-on
+   block of chips. */
+.categoryBlock {
+  margin-bottom: 24px;
+}
+.categoryBlock:last-child {
+  margin-bottom: 4px;
+}
+.categoryLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Sora", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted, #64748b);
+  margin-bottom: 12px;
+}
+.categoryBlock:not(:first-child) .categoryLabel {
+  padding-top: 20px;
+  border-top: 1px dashed var(--border, #e2e8f0);
+}
+
+.chipOutline {
+  background: none;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text, #0f172a);
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+.chipOutline:hover {
+  border-color: var(--border-strong, #cbd5e1);
+  background: var(--bg, #f8fafc);
+}
+.chipOutline:focus-visible {
+  outline: 2px solid var(--primary, #2563eb);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chipOutline {
+    transition: none;
+  }
+}

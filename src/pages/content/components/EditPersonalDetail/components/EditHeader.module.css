@@ -1,0 +1,42 @@
+.editHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.editHeader h2 {
+  font-family: "Sora", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text, #0f172a);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.tipsBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-tint, #eff6ff);
+  border: none;
+  border-radius: 999px;
+  padding: 7px 14px;
+  color: var(--primary, #2563eb);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+  transition: background 0.15s ease;
+}
+.tipsBtn:hover {
+  background: var(--primary-tint-hover, #dbeafe);
+}
+.tipsBtn:focus-visible {
+  outline: 2px solid var(--primary, #2563eb);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tipsBtn {
+    transition: none;
+  }
+}
