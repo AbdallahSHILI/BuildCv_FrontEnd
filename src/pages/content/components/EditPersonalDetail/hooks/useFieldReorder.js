@@ -53,24 +53,34 @@ export default function useFieldReorder(initialOrder) {
     if (!info) return;
 
     const deltaY = e.clientY - info.startY;
-    setDragOffsetY(deltaY);
+    const { slots, startIndex } = info;
+    let { currentIndex } = info;
 
-    const draggedCenterNow = info.slots[info.startIndex].centerY + deltaY;
-    const { currentIndex, slots } = info;
+    const draggedCenterNow = slots[startIndex].centerY + deltaY;
 
-    if (
+    // Loop (not just a single if/else-if) so a fast drag that crosses
+    // more than one slot in a single pointermove still resolves correctly.
+    while (
       currentIndex > 0 &&
       draggedCenterNow < slots[currentIndex - 1].centerY
     ) {
       swapOrder(currentIndex, currentIndex - 1);
-      info.currentIndex -= 1;
-    } else if (
+      currentIndex -= 1;
+    }
+    while (
       currentIndex < slots.length - 1 &&
       draggedCenterNow > slots[currentIndex + 1].centerY
     ) {
       swapOrder(currentIndex, currentIndex + 1);
-      info.currentIndex += 1;
+      currentIndex += 1;
     }
+
+    info.currentIndex = currentIndex;
+
+    // The dragged row now renders at slots[currentIndex] in the flow.
+    // Subtract that shift so the transform keeps it anchored to the
+    // pointer instead of being applied on top of the new flow position.
+    setDragOffsetY(deltaY - (slots[currentIndex].top - slots[startIndex].top));
   };
 
   const handleDragPointerUp = () => {
