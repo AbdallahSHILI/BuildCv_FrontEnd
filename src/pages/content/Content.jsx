@@ -26,6 +26,14 @@ export default function Content() {
   const [addedSections, setAddedSections] = useState([]);
   const [activeSection, setActiveSection] = useState(null);
   const [summaryEntry, setSummaryEntry] = useState({ summary: "" });
+  const [activeExtras, setActiveExtras] = useState([]);
+  const [extraValues, setExtraValues] = useState({});
+  const addExtra = (key) => {
+    setActiveExtras((prev) => (prev.includes(key) ? prev : [...prev, key]));
+  };
+
+  const changeExtra = (key, value) =>
+    setExtraValues((prev) => ({ ...prev, [key]: value }));
   const [educationEntry, setEducationEntry] = useState({
     degree: "",
     school: "",
@@ -129,6 +137,10 @@ export default function Content() {
             onDragPointerDown={handleDragPointerDown}
             onDragPointerMove={handleDragPointerMove}
             onDragPointerUp={handleDragPointerUp}
+            activeExtras={activeExtras}
+            extraValues={extraValues}
+            onAddExtra={addExtra}
+            onChangeExtra={changeExtra}
           />
         ) : activeSection === "summary" ? (
           <Summary
@@ -210,7 +222,12 @@ export default function Content() {
       </div>
 
       <div className={styles.rightPanel}>
-        <ResumePreview details={details} fieldOrder={fieldOrder} />
+        <ResumePreview
+          details={details}
+          fieldOrder={fieldOrder}
+          activeExtras={activeExtras}
+          extraValues={extraValues}
+        />
       </div>
 
       <AddContentModal

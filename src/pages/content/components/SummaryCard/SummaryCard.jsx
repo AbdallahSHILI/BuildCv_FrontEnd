@@ -1,4 +1,4 @@
-import { Mail, Phone, Pin, Camera, Pencil, Plus } from "../Icons";
+import { Mail, Phone, Pin, Camera, Pencil, Plus } from "../Icons/Icons";
 import styles from "./SummaryCard.module.css";
 
 //ResumePreview lives in the right panel. It's the actual resume document — the blank page that's

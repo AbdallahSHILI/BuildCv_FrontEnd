@@ -1,4 +1,4 @@
-import { Bulb } from "../../Icons";
+import { Bulb } from "../../Icons/Icons";
 import styles from "./EditHeader.module.css";
 
 export default function EditHeader() {
