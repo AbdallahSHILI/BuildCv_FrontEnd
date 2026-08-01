@@ -4,7 +4,6 @@ import {
   SiGitbook,
   SiMedium,
   SiOrcid,
-  SiSkype,
   SiBluesky,
   SiThreads,
   SiDiscord,

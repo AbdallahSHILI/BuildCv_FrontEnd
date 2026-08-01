@@ -1,6 +1,5 @@
 import { Mail, Phone, Pin } from "../Icons/Icons";
 import { EXTRA_ICONS, DefaultExtraIcon } from "../Icons/ExtraIcons";
-import { getFieldByKey } from "../../data";
 import styles from "./ResumePreview.module.css";
 
 const CORE_ICONS = { email: Mail, phone: Phone, location: Pin };
