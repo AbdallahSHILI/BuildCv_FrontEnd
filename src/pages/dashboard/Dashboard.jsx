@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import EmptyDashboard from "../../components/auth/dashboard/EmptyDashboard";
 import ResumesListDashboard from "../../components/auth/dashboard/ResumesListDashboard";
 
 const Dashboard = () => {
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   // Fetch user's resumes on component mount
   useEffect(() => {
