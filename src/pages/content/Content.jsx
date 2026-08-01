@@ -224,6 +224,7 @@ export default function Content() {
       <div className={styles.rightPanel}>
         <ResumePreview
           details={details}
+          summary={summaryEntry.summary}
           fieldOrder={fieldOrder}
           activeExtras={activeExtras}
           extraValues={extraValues}
