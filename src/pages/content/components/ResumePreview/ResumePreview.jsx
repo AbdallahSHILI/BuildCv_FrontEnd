@@ -7,6 +7,7 @@ const defaultOrder = ["email", "phone", "location"];
 
 export default function ResumePreview({
   details,
+  summary,
   fieldOrder = defaultOrder,
   activeExtras = [],
   extraValues = {},
@@ -60,6 +61,13 @@ export default function ResumePreview({
             )}
           </div>
         </div>
+      )}
+
+      {summary && (
+        <div
+          className={styles.previewSummary}
+          dangerouslySetInnerHTML={{ __html: summary }}
+        />
       )}
     </div>
   );
