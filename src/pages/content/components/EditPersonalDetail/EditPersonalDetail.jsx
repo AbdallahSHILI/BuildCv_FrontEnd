@@ -6,26 +6,22 @@ import ProfileSection from "./components/ProfileSection";
 import CoreFieldsList from "./components/CoreFieldsList";
 import ExtraFieldsList from "./components/ExtraFieldsList";
 import AddDetailsSection from "./components/AddDetailsSection";
-import useFieldReorder from "./hooks/useFieldReorder";
 
 export default function EditPersonalDetail({
   details,
   onChange,
   onPhotoChange,
   onDone,
+  fieldOrder,
+  draggingKey,
+  dragOffsetY,
+  setItemRef,
+  onDragPointerDown,
+  onDragPointerMove,
+  onDragPointerUp,
 }) {
   const [activeExtras, setActiveExtras] = useState([]);
   const [extraValues, setExtraValues] = useState({});
-
-  const {
-    fieldOrder,
-    draggingKey,
-    dragOffsetY,
-    setItemRef,
-    handleDragPointerDown,
-    handleDragPointerMove,
-    handleDragPointerUp,
-  } = useFieldReorder(["email", "phone", "location"]);
 
   const addExtra = (key) => {
     if (!activeExtras.includes(key)) setActiveExtras((prev) => [...prev, key]);
@@ -52,9 +48,9 @@ export default function EditPersonalDetail({
           draggingKey={draggingKey}
           dragOffsetY={dragOffsetY}
           setItemRef={setItemRef}
-          onDragPointerDown={handleDragPointerDown}
-          onDragPointerMove={handleDragPointerMove}
-          onDragPointerUp={handleDragPointerUp}
+          onDragPointerDown={onDragPointerDown}
+          onDragPointerMove={onDragPointerMove}
+          onDragPointerUp={onDragPointerUp}
         />
 
         <ExtraFieldsList
