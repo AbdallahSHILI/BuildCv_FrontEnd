@@ -1,3 +1,6 @@
+import { Mail, Phone, Pin } from "../Icons/Icons";
+import styles from "./ResumePreview.module.css";
+
 const ICONS = { email: Mail, phone: Phone, location: Pin };
 
 const defaultOrder = ["email", "phone", "location"];
