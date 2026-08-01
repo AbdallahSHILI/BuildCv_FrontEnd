@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Check } from "../Icons";
+import { Check } from "../Icons/Icons";
 import styles from "./EditPersonalDetail.module.css";
 import EditHeader from "./components/EditHeader";
 import ProfileSection from "./components/ProfileSection";
@@ -19,17 +18,11 @@ export default function EditPersonalDetail({
   onDragPointerDown,
   onDragPointerMove,
   onDragPointerUp,
+  activeExtras,
+  extraValues,
+  onAddExtra,
+  onChangeExtra,
 }) {
-  const [activeExtras, setActiveExtras] = useState([]);
-  const [extraValues, setExtraValues] = useState({});
-
-  const addExtra = (key) => {
-    if (!activeExtras.includes(key)) setActiveExtras((prev) => [...prev, key]);
-  };
-
-  const changeExtra = (key, value) =>
-    setExtraValues((prev) => ({ ...prev, [key]: value }));
-
   return (
     <div className={styles.editCard}>
       <div className={styles.editScroll}>
@@ -56,10 +49,13 @@ export default function EditPersonalDetail({
         <ExtraFieldsList
           activeExtras={activeExtras}
           extraValues={extraValues}
-          onChangeExtra={changeExtra}
+          onChangeExtra={onChangeExtra}
         />
 
-        <AddDetailsSection activeExtras={activeExtras} onAddExtra={addExtra} />
+        <AddDetailsSection
+          activeExtras={activeExtras}
+          onAddExtra={onAddExtra}
+        />
       </div>
 
       <div className={styles.editFooter}>

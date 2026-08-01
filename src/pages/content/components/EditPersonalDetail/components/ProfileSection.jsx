@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Camera } from "../../Icons";
+import { Camera } from "../../Icons/Icons";
 import fieldStyles from "./shared/fields.module.css";
 import styles from "./ProfileSection.module.css";
 

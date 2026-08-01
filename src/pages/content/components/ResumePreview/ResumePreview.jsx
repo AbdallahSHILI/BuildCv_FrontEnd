@@ -1,12 +1,31 @@
 import { Mail, Phone, Pin } from "../Icons/Icons";
+import { EXTRA_ICONS, DefaultExtraIcon } from "../Icons/ExtraIcons";
+import { getFieldByKey } from "../../data";
 import styles from "./ResumePreview.module.css";
 
-const ICONS = { email: Mail, phone: Phone, location: Pin };
-
+const CORE_ICONS = { email: Mail, phone: Phone, location: Pin };
 const defaultOrder = ["email", "phone", "location"];
 
-export default function ResumePreview({ details, fieldOrder = defaultOrder }) {
-  const hasAnyInfo = details.email || details.phone || details.location;
+export default function ResumePreview({
+  details,
+  fieldOrder = defaultOrder,
+  activeExtras = [],
+  extraValues = {},
+}) {
+  const coreItems = fieldOrder
+    .map((key) => ({ key, value: details[key], Icon: CORE_ICONS[key] }))
+    .filter((item) => item.value);
+
+  const extraItems = activeExtras
+    .map((key) => ({
+      key,
+      value: extraValues[key],
+      Icon: EXTRA_ICONS[key] || DefaultExtraIcon,
+    }))
+    .filter((item) => item.value);
+
+  const contactItems = [...coreItems, ...extraItems];
+  const hasAnyInfo = contactItems.length > 0;
   const isEmpty = !details.fullName && !hasAnyInfo && !details.photo;
 
   return (
@@ -33,16 +52,11 @@ export default function ResumePreview({ details, fieldOrder = defaultOrder }) {
             )}
             {hasAnyInfo && (
               <div className={styles.previewContactRow}>
-                {fieldOrder.map((key) => {
-                  const value = details[key];
-                  if (!value) return null;
-                  const Icon = ICONS[key];
-                  return (
-                    <span key={key}>
-                      <Icon /> {value}
-                    </span>
-                  );
-                })}
+                {contactItems.map(({ key, value, Icon }) => (
+                  <span key={key}>
+                    <Icon /> {value}
+                  </span>
+                ))}
               </div>
             )}
           </div>

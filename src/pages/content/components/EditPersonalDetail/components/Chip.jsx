@@ -1,4 +1,4 @@
-import { Plus } from "../../Icons";
+import { Plus } from "../../Icons/Icons";
 import styles from "./Chip.module.css";
 
 export default function Chip({ label, onClick }) {
