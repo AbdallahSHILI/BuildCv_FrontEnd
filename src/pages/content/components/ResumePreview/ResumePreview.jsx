@@ -27,11 +27,16 @@ export default function ResumePreview({
 
   const contactItems = [...coreItems, ...extraItems];
   const hasAnyInfo = contactItems.length > 0;
-  const isEmpty = !details.fullName && !hasAnyInfo && !details.photo;
-
   const hasEducation =
     education &&
     (education.degree || education.school || education.description);
+
+  const isEmpty =
+    !details.fullName &&
+    !hasAnyInfo &&
+    !details.photo &&
+    !summary &&
+    !hasEducation;
 
   return (
     <div className={styles.previewSheet}>
@@ -69,17 +74,20 @@ export default function ResumePreview({
       )}
 
       {summary && (
-        <div
-          className={styles.previewSummary}
-          dangerouslySetInnerHTML={{ __html: summary }}
-        />
+        <div className={styles.previewSection}>
+          <h2 className={styles.previewSectionTitle}>Summary</h2>
+          <div
+            className={styles.previewSummary}
+            dangerouslySetInnerHTML={{ __html: summary }}
+          />
+        </div>
       )}
 
       {hasEducation && (
         <div className={styles.previewSection}>
           <h2 className={styles.previewSectionTitle}>Education</h2>
           <div className={styles.previewEntry}>
-            <div className={styles.previewEntryHeader}>
+            <div className={styles.previewEntryRow}>
               <span className={styles.previewEntryTitle}>
                 {education.degree}
               </span>
@@ -89,9 +97,15 @@ export default function ResumePreview({
                 </span>
               )}
             </div>
-            <div className={styles.previewEntrySubtitle}>
-              {education.school}
-              {education.location ? `, ${education.location}` : ""}
+            <div className={styles.previewEntryRow}>
+              <span className={styles.previewEntrySubtitle}>
+                {education.school}
+              </span>
+              {education.location && (
+                <span className={styles.previewEntryLocation}>
+                  {education.location}
+                </span>
+              )}
             </div>
             {education.description && (
               <div
