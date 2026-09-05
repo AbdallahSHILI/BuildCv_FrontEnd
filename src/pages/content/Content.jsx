@@ -228,6 +228,7 @@ export default function Content() {
           fieldOrder={fieldOrder}
           activeExtras={activeExtras}
           extraValues={extraValues}
+          education={educationEntry}
         />
       </div>
 
