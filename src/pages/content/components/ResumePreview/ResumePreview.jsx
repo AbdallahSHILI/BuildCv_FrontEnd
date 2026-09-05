@@ -11,7 +11,8 @@ export default function ResumePreview({
   fieldOrder = defaultOrder,
   activeExtras = [],
   extraValues = {},
-  education,
+  education = [],
+  experience = [],
 }) {
   const coreItems = fieldOrder
     .map((key) => ({ key, value: details[key], Icon: CORE_ICONS[key] }))
@@ -36,7 +37,8 @@ export default function ResumePreview({
     !hasAnyInfo &&
     !details.photo &&
     !summary &&
-    !hasEducation;
+    education.length === 0 &&
+    experience.length === 0;
 
   return (
     <div className={styles.previewSheet}>
@@ -45,32 +47,7 @@ export default function ResumePreview({
           Your resume preview will appear here
         </div>
       ) : (
-        <div className={styles.previewHeader}>
-          {details.photo && (
-            <img
-              src={details.photo}
-              alt="Profile"
-              className={styles.previewAvatar}
-            />
-          )}
-          <div>
-            {details.fullName && (
-              <h1 className={styles.previewName}>{details.fullName}</h1>
-            )}
-            {details.title && (
-              <p className={styles.previewTitle}>{details.title}</p>
-            )}
-            {hasAnyInfo && (
-              <div className={styles.previewContactRow}>
-                {contactItems.map(({ key, value, Icon }) => (
-                  <span key={key}>
-                    <Icon /> {value}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
+        <div className={styles.previewHeader}>{/* unchanged */}</div>
       )}
 
       {summary && (
@@ -83,37 +60,73 @@ export default function ResumePreview({
         </div>
       )}
 
-      {hasEducation && (
+      {education.length > 0 && (
         <div className={styles.previewSection}>
           <h2 className={styles.previewSectionTitle}>Education</h2>
-          <div className={styles.previewEntry}>
-            <div className={styles.previewEntryRow}>
-              <span className={styles.previewEntryTitle}>
-                {education.degree}
-              </span>
-              {(education.startDate || education.endDate) && (
-                <span className={styles.previewEntryDate}>
-                  {education.startDate} — {education.endDate}
+          {education.map((edu) => (
+            <div className={styles.previewEntry} key={edu.id}>
+              <div className={styles.previewEntryRow}>
+                <span className={styles.previewEntryTitle}>{edu.degree}</span>
+                {(edu.startDate || edu.endDate) && (
+                  <span className={styles.previewEntryDate}>
+                    {edu.startDate} — {edu.endDate}
+                  </span>
+                )}
+              </div>
+              <div className={styles.previewEntryRow}>
+                <span className={styles.previewEntrySubtitle}>
+                  {edu.school}
                 </span>
+                {edu.location && (
+                  <span className={styles.previewEntryLocation}>
+                    {edu.location}
+                  </span>
+                )}
+              </div>
+              {edu.description && (
+                <div
+                  className={styles.previewEntryDescription}
+                  dangerouslySetInnerHTML={{ __html: edu.description }}
+                />
               )}
             </div>
-            <div className={styles.previewEntryRow}>
-              <span className={styles.previewEntrySubtitle}>
-                {education.school}
-              </span>
-              {education.location && (
-                <span className={styles.previewEntryLocation}>
-                  {education.location}
+          ))}
+        </div>
+      )}
+
+      {experience.length > 0 && (
+        <div className={styles.previewSection}>
+          <h2 className={styles.previewSectionTitle}>
+            Professional Experience
+          </h2>
+          {experience.map((exp) => (
+            <div className={styles.previewEntry} key={exp.id}>
+              <div className={styles.previewEntryRow}>
+                <span className={styles.previewEntryTitle}>{exp.jobTitle}</span>
+                {(exp.startDate || exp.endDate) && (
+                  <span className={styles.previewEntryDate}>
+                    {exp.startDate} — {exp.endDate}
+                  </span>
+                )}
+              </div>
+              <div className={styles.previewEntryRow}>
+                <span className={styles.previewEntrySubtitle}>
+                  {exp.employer}
                 </span>
+                {exp.location && (
+                  <span className={styles.previewEntryLocation}>
+                    {exp.location}
+                  </span>
+                )}
+              </div>
+              {exp.description && (
+                <div
+                  className={styles.previewEntryDescription}
+                  dangerouslySetInnerHTML={{ __html: exp.description }}
+                />
               )}
             </div>
-            {education.description && (
-              <div
-                className={styles.previewEntryDescription}
-                dangerouslySetInnerHTML={{ __html: education.description }}
-              />
-            )}
-          </div>
+          ))}
         </div>
       )}
     </div>

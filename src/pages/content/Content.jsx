@@ -34,23 +34,11 @@ export default function Content() {
 
   const changeExtra = (key, value) =>
     setExtraValues((prev) => ({ ...prev, [key]: value }));
-  const [educationEntry, setEducationEntry] = useState({
-    degree: "",
-    school: "",
-    startDate: "",
-    endDate: "",
-    location: "",
-    description: "",
-  });
-  const [professionalExperienceEntry, setProfessionalExperienceEntry] =
-    useState({
-      jobTitle: "",
-      employer: "",
-      startDate: "",
-      endDate: "",
-      location: "",
-      description: "",
-    });
+  const [educationEntries, setEducationEntries] = useState([]);
+  const [activeEducationId, setActiveEducationId] = useState(null);
+
+  const [experienceEntries, setExperienceEntries] = useState([]);
+  const [activeExperienceId, setActiveExperienceId] = useState(null);
   const [skillsEntry, setSkillsEntry] = useState({
     skill: "",
     info: "",
@@ -109,6 +97,47 @@ export default function Content() {
   const updatePhoto = (dataUrl) => updateField("photo", dataUrl);
 
   const handleAddSection = (sectionKey) => {
+    if (sectionKey === "education") {
+      const newEntry = {
+        id: crypto.randomUUID(),
+        degree: "",
+        school: "",
+        startDate: "",
+        endDate: "",
+        location: "",
+        description: "",
+      };
+      setEducationEntries((prev) => [...prev, newEntry]);
+      setActiveEducationId(newEntry.id);
+      setActiveSection("education");
+      setIsAddModalOpen(false);
+      setAddedSections((s) =>
+        s.includes(sectionKey) ? s : [...s, sectionKey],
+      );
+      return;
+    }
+
+    if (sectionKey === "experience") {
+      const newEntry = {
+        id: crypto.randomUUID(),
+        jobTitle: "",
+        employer: "",
+        startDate: "",
+        endDate: "",
+        location: "",
+        description: "",
+      };
+      setExperienceEntries((prev) => [...prev, newEntry]);
+      setActiveExperienceId(newEntry.id);
+      setActiveSection("experience");
+      setIsAddModalOpen(false);
+      setAddedSections((s) =>
+        s.includes(sectionKey) ? s : [...s, sectionKey],
+      );
+      return;
+    }
+
+    // unchanged behavior for non-repeatable sections
     setAddedSections((s) => (s.includes(sectionKey) ? s : [...s, sectionKey]));
     setActiveSection(sectionKey);
     setIsAddModalOpen(false);
@@ -151,17 +180,37 @@ export default function Content() {
           />
         ) : activeSection === "education" ? (
           <Education
-            entry={educationEntry}
-            onChange={setEducationEntry}
+            entry={educationEntries.find((e) => e.id === activeEducationId)}
+            onChange={(updated) =>
+              setEducationEntries((prev) =>
+                prev.map((e) => (e.id === activeEducationId ? updated : e)),
+              )
+            }
             onDone={closeActiveSection}
-            onDelete={() => removeSection("education")}
+            onDelete={() => {
+              setEducationEntries((prev) =>
+                prev.filter((e) => e.id !== activeEducationId),
+              );
+              setActiveSection(null);
+              setActiveEducationId(null);
+            }}
           />
         ) : activeSection === "experience" ? (
           <ProfessionalExperience
-            entry={professionalExperienceEntry}
-            onChange={setProfessionalExperienceEntry}
+            entry={experienceEntries.find((e) => e.id === activeExperienceId)}
+            onChange={(updated) =>
+              setExperienceEntries((prev) =>
+                prev.map((e) => (e.id === activeExperienceId ? updated : e)),
+              )
+            }
             onDone={closeActiveSection}
-            onDelete={() => removeSection("experience")}
+            onDelete={() => {
+              setExperienceEntries((prev) =>
+                prev.filter((e) => e.id !== activeExperienceId),
+              );
+              setActiveSection(null);
+              setActiveExperienceId(null);
+            }}
           />
         ) : activeSection === "skills" ? (
           <Skills
@@ -228,7 +277,8 @@ export default function Content() {
           fieldOrder={fieldOrder}
           activeExtras={activeExtras}
           extraValues={extraValues}
-          education={educationEntry}
+          education={educationEntries}
+          experience={experienceEntries}
         />
       </div>
 

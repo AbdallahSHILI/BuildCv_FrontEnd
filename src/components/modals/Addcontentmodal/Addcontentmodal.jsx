@@ -287,12 +287,35 @@ const SECTIONS = [
   },
 ];
 
+// mark which sections support multiple entries
+const REPEATABLE = new Set([
+  "education",
+  "experience",
+  "skills",
+  "languages",
+  "certificates",
+  "interests",
+  "projects",
+  "courses",
+  "awards",
+  "organisations",
+  "publications",
+  "references",
+  "custom",
+]);
+
 const AddContentModal = ({ isOpen, onClose, onAdd, addedSections = [] }) => {
   if (!isOpen) return null;
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) onClose();
   };
+
+  // hide non-repeatable sections once added; repeatable ones always stay visible
+  const visibleSections = SECTIONS.filter(
+    (section) =>
+      REPEATABLE.has(section.key) || !addedSections.includes(section.key),
+  );
 
   return (
     <div className={styles.modalBackdrop} onClick={handleBackdropClick}>
@@ -337,13 +360,15 @@ const AddContentModal = ({ isOpen, onClose, onAdd, addedSections = [] }) => {
 
         {/* Grid */}
         <div className={styles.addContentGrid}>
-          {SECTIONS.map((section) => {
-            const isAdded = addedSections.includes(section.key);
+          {visibleSections.map((section) => {
+            const isAdded =
+              addedSections.includes(section.key) &&
+              !REPEATABLE.has(section.key);
             return (
               <button
                 key={section.key}
                 className={`${styles.addContentCard} ${section.dashed ? styles.addContentCardDashed : ""} ${isAdded ? styles.addContentCardAdded : ""}`}
-                onClick={() => !isAdded && onAdd(section.key)}
+                onClick={() => onAdd(section.key)}
                 disabled={isAdded}
               >
                 <div className={styles.addContentCardIcon}>{section.icon}</div>
