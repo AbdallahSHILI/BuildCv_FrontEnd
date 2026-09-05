@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   EditEntryHeader,
   TextField,
+  MonthYearField,
   RichTextField,
   EditEntryFooter,
   FieldRow,
@@ -40,17 +41,15 @@ export default function ProfessionalExperience({
       />
 
       <FieldRow>
-        <TextField
+        <MonthYearField
           label="Start Date"
           value={entry.startDate}
           onChange={(v) => update("startDate", v)}
-          placeholder="MM/YYYY"
         />
-        <TextField
+        <MonthYearField
           label="End Date"
           value={entry.endDate}
           onChange={(v) => update("endDate", v)}
-          placeholder="MM/YYYY"
         />
         <TextField
           label="Location"

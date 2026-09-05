@@ -1,0 +1,114 @@
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text, #0f172a);
+}
+
+.input {
+  padding: 10px 12px;
+  border: 1.5px solid var(--border, #e2e8f0);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--text, #0f172a);
+  cursor: pointer;
+  background: var(--surface, #fff);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary, #2563eb);
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  display: flex;
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+  overflow: hidden;
+  min-width: 320px;
+}
+
+.monthGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 12px;
+  border-right: 1px solid var(--border, #e2e8f0);
+}
+
+.yearGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+  padding: 12px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.cell {
+  border: none;
+  background: none;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--text, #0f172a);
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cell:hover {
+  background: var(--surface-hover, #f1f5f9);
+}
+
+.cellActive {
+  background: var(--primary, #2563eb);
+  color: #fff;
+}
+
+.yearCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.yearGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+  padding: 12px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.presentBtn {
+  margin: 0 12px 12px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary, #2563eb);
+  background: var(--surface, #fff);
+  border: 1.5px solid var(--primary, #2563eb);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.presentBtn:hover {
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.cellDisabled {
+  color: var(--text-muted, #64748b);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
