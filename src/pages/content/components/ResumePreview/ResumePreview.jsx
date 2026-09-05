@@ -11,6 +11,7 @@ export default function ResumePreview({
   fieldOrder = defaultOrder,
   activeExtras = [],
   extraValues = {},
+  education,
 }) {
   const coreItems = fieldOrder
     .map((key) => ({ key, value: details[key], Icon: CORE_ICONS[key] }))
@@ -27,6 +28,10 @@ export default function ResumePreview({
   const contactItems = [...coreItems, ...extraItems];
   const hasAnyInfo = contactItems.length > 0;
   const isEmpty = !details.fullName && !hasAnyInfo && !details.photo;
+
+  const hasEducation =
+    education &&
+    (education.degree || education.school || education.description);
 
   return (
     <div className={styles.previewSheet}>
@@ -68,6 +73,34 @@ export default function ResumePreview({
           className={styles.previewSummary}
           dangerouslySetInnerHTML={{ __html: summary }}
         />
+      )}
+
+      {hasEducation && (
+        <div className={styles.previewSection}>
+          <h2 className={styles.previewSectionTitle}>Education</h2>
+          <div className={styles.previewEntry}>
+            <div className={styles.previewEntryHeader}>
+              <span className={styles.previewEntryTitle}>
+                {education.degree}
+              </span>
+              {(education.startDate || education.endDate) && (
+                <span className={styles.previewEntryDate}>
+                  {education.startDate} — {education.endDate}
+                </span>
+              )}
+            </div>
+            <div className={styles.previewEntrySubtitle}>
+              {education.school}
+              {education.location ? `, ${education.location}` : ""}
+            </div>
+            {education.description && (
+              <div
+                className={styles.previewEntryDescription}
+                dangerouslySetInnerHTML={{ __html: education.description }}
+              />
+            )}
+          </div>
+        </div>
       )}
     </div>
   );
