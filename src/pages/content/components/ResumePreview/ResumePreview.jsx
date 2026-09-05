@@ -28,10 +28,6 @@ export default function ResumePreview({
 
   const contactItems = [...coreItems, ...extraItems];
   const hasAnyInfo = contactItems.length > 0;
-  const hasEducation =
-    education &&
-    (education.degree || education.school || education.description);
-
   const isEmpty =
     !details.fullName &&
     !hasAnyInfo &&
