@@ -274,6 +274,7 @@ export default function Content() {
         <ResumePreview
           details={details}
           summary={summaryEntry.summary}
+          showSummary={addedSections.includes("summary")}
           fieldOrder={fieldOrder}
           activeExtras={activeExtras}
           extraValues={extraValues}
