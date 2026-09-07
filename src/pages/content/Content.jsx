@@ -357,6 +357,12 @@ export default function Content() {
           extraValues={extraValues}
           education={educationEntries}
           experience={experienceEntries}
+          skills={skillsEntry}
+          showSkills={addedSections.includes("skills")}
+          languages={languagesEntry}
+          showLanguages={addedSections.includes("languages")}
+          certificates={certificatesEntry}
+          showCertificates={addedSections.includes("certificates")}
         />
       </div>
 
