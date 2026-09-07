@@ -208,6 +208,39 @@
   flex: 1;
 }
 
+.addContentCardUnavailable {
+  background: #f8fafc;
+  border-color: #e8ecf0;
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+}
+
+.addContentCardUnavailable:hover {
+  border-color: #e8ecf0;
+  background: #f8fafc;
+  transform: none;
+}
+
+.addContentCardUnavailable .addContentCardIcon,
+.addContentCardUnavailable .addContentCardLabel {
+  color: #94a3b8;
+}
+
+.addContentCardBadge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
 .addContentCardCheck {
   position: absolute;
   top: 10px;

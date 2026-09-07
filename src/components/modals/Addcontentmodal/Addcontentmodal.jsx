@@ -287,6 +287,12 @@ export const SECTIONS = [
   },
 ];
 
+// sections from this key onward (inclusive) are not available yet
+const UNAVAILABLE_FROM_KEY = "interests";
+const UNAVAILABLE_FROM_INDEX = SECTIONS.findIndex(
+  (section) => section.key === UNAVAILABLE_FROM_KEY,
+);
+
 // mark which sections support multiple entries
 const REPEATABLE = new Set([
   "education",
@@ -312,7 +318,10 @@ const AddContentModal = ({ isOpen, onClose, onAdd, addedSections = [] }) => {
   };
 
   // hide non-repeatable sections once added; repeatable ones always stay visible
-  const visibleSections = SECTIONS.filter(
+  const visibleSections = SECTIONS.map((section, index) => ({
+    ...section,
+    index,
+  })).filter(
     (section) =>
       REPEATABLE.has(section.key) || !addedSections.includes(section.key),
   );
@@ -364,12 +373,16 @@ const AddContentModal = ({ isOpen, onClose, onAdd, addedSections = [] }) => {
             const isAdded =
               addedSections.includes(section.key) &&
               !REPEATABLE.has(section.key);
+            const isUnavailable =
+              UNAVAILABLE_FROM_INDEX !== -1 &&
+              section.index >= UNAVAILABLE_FROM_INDEX;
             return (
               <button
                 key={section.key}
-                className={`${styles.addContentCard} ${section.dashed ? styles.addContentCardDashed : ""} ${isAdded ? styles.addContentCardAdded : ""}`}
+                className={`${styles.addContentCard} ${section.dashed ? styles.addContentCardDashed : ""} ${isAdded ? styles.addContentCardAdded : ""} ${isUnavailable ? styles.addContentCardUnavailable : ""}`}
                 onClick={() => onAdd(section.key)}
-                disabled={isAdded}
+                disabled={isAdded || isUnavailable}
+                title={isUnavailable ? "Coming soon" : undefined}
               >
                 <div className={styles.addContentCardIcon}>{section.icon}</div>
                 <div className={styles.addContentCardText}>
@@ -391,6 +404,9 @@ const AddContentModal = ({ isOpen, onClose, onAdd, addedSections = [] }) => {
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </div>
+                )}
+                {isUnavailable && (
+                  <div className={styles.addContentCardBadge}>Coming soon</div>
                 )}
               </button>
             );

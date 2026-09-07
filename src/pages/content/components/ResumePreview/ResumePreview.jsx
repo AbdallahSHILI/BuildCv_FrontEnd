@@ -14,6 +14,12 @@ export default function ResumePreview({
   extraValues = {},
   education = [],
   experience = [],
+  skills,
+  showSkills = false,
+  languages,
+  showLanguages = false,
+  certificates,
+  showCertificates = false,
 }) {
   const coreItems = fieldOrder
     .map((key) => ({ key, value: details[key], Icon: CORE_ICONS[key] }))
@@ -34,6 +40,9 @@ export default function ResumePreview({
     !hasAnyInfo &&
     !details.photo &&
     !showSummary && // was: !summary
+    !showSkills &&
+    !showLanguages &&
+    !showCertificates &&
     education.length === 0 &&
     experience.length === 0;
 
@@ -83,6 +92,71 @@ export default function ResumePreview({
             className={styles.previewSummary}
             dangerouslySetInnerHTML={{ __html: summary }}
           />
+        </div>
+      )}
+
+      {showSkills && (
+        <div className={styles.previewSection}>
+          <h2 className={styles.previewSectionTitle}>Skills</h2>
+          <div className={styles.previewEntry}>
+            <div className={styles.previewEntryRow}>
+              <span className={styles.previewEntryTitle}>{skills.skill}</span>
+              {skills.level && (
+                <span className={styles.previewEntryDate}>{skills.level}</span>
+              )}
+            </div>
+            {skills.info && (
+              <div
+                className={styles.previewEntryDescription}
+                dangerouslySetInnerHTML={{ __html: skills.info }}
+              />
+            )}
+          </div>
+        </div>
+      )}
+
+      {showLanguages && (
+        <div className={styles.previewSection}>
+          <h2 className={styles.previewSectionTitle}>Languages</h2>
+          <div className={styles.previewEntry}>
+            <div className={styles.previewEntryRow}>
+              <span className={styles.previewEntryTitle}>
+                {languages.language}
+              </span>
+              {languages.level && (
+                <span className={styles.previewEntryDate}>
+                  {languages.level}
+                </span>
+              )}
+            </div>
+            {languages.additionalInfo && (
+              <div
+                className={styles.previewEntryDescription}
+                dangerouslySetInnerHTML={{ __html: languages.additionalInfo }}
+              />
+            )}
+          </div>
+        </div>
+      )}
+
+      {showCertificates && (
+        <div className={styles.previewSection}>
+          <h2 className={styles.previewSectionTitle}>Certificates</h2>
+          <div className={styles.previewEntry}>
+            <div className={styles.previewEntryRow}>
+              <span className={styles.previewEntryTitle}>
+                {certificates.certificate}
+              </span>
+            </div>
+            {certificates.additionalInfo && (
+              <div
+                className={styles.previewEntryDescription}
+                dangerouslySetInnerHTML={{
+                  __html: certificates.additionalInfo,
+                }}
+              />
+            )}
+          </div>
         </div>
       )}
 
