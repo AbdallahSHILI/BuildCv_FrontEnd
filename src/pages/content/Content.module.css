@@ -30,3 +30,83 @@
     box-sizing: border-box;
   }
 }
+
+.sectionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.addContentBtn {
+  margin-top: 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--primary, #2563eb);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.addContentBtn:hover {
+  background: var(--primary-hover, #1d4ed8);
+  transform: translateY(-1px);
+}
+
+/* entries list shown inside an expanded Education/Experience accordion */
+.entryList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+}
+
+.entryRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg, #f8fafc);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  font-family: "DM Sans", sans-serif;
+}
+
+.entryRowTitle {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--text, #0f172a);
+}
+
+.entryRowSubtitle {
+  font-size: 12.5px;
+  color: var(--text-muted, #64748b);
+}
+
+.addEntryBtn {
+  margin-top: 4px;
+  padding: 10px 12px;
+  border: 1.5px dashed var(--border, #cbd5e1);
+  border-radius: 8px;
+  background: none;
+  color: var(--primary, #2563eb);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  font-family: "DM Sans", sans-serif;
+}
