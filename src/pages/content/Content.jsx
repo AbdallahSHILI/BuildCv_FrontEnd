@@ -5,6 +5,7 @@ import {
   EditPersonalDetail,
   ResumePreview,
   AddContentModal,
+  SectionAccordion,
   Summary,
   Education,
   ProfessionalExperience,
@@ -16,6 +17,7 @@ import {
   Courses,
   Awards,
 } from "./components";
+import { Plus } from "./components/Icons/Icons";
 import { EMPTY_DETAILS } from "./data";
 import styles from "./Content.module.css";
 
@@ -24,7 +26,8 @@ export default function Content() {
   const [isEditing, setIsEditing] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [addedSections, setAddedSections] = useState([]);
-  const [activeSection, setActiveSection] = useState(null);
+  // which accordion row is expanded — no longer swaps out the whole panel
+  const [expandedSection, setExpandedSection] = useState(null);
   const [summaryEntry, setSummaryEntry] = useState({ summary: "" });
   const [activeExtras, setActiveExtras] = useState([]);
   const [extraValues, setExtraValues] = useState({});
@@ -96,9 +99,53 @@ export default function Content() {
     setDetails((d) => ({ ...d, [field]: value }));
   const updatePhoto = (dataUrl) => updateField("photo", dataUrl);
 
-  const handleAddSection = (sectionKey) => {
-    if (sectionKey === "education") {
-      const newEntry = {
+  // config for sections that hold a single entry object (unchanged data shape)
+  const singleSections = {
+    summary: {
+      Component: Summary,
+      entry: summaryEntry,
+      setEntry: setSummaryEntry,
+    },
+    skills: { Component: Skills, entry: skillsEntry, setEntry: setSkillsEntry },
+    languages: {
+      Component: Languages,
+      entry: languagesEntry,
+      setEntry: setLanguagesEntry,
+    },
+    certificates: {
+      Component: Certificates,
+      entry: certificatesEntry,
+      setEntry: setCertificatesEntry,
+    },
+    interests: {
+      Component: Interests,
+      entry: interestsEntry,
+      setEntry: setInterestsEntry,
+    },
+    projects: {
+      Component: Projects,
+      entry: projectsEntry,
+      setEntry: setProjectsEntry,
+    },
+    courses: {
+      Component: Courses,
+      entry: coursesEntry,
+      setEntry: setCoursesEntry,
+    },
+    awards: { Component: Awards, entry: awardsEntry, setEntry: setAwardsEntry },
+  };
+
+  // config for sections that hold a list of entries (education, experience)
+  const repeatableSections = {
+    education: {
+      Component: Education,
+      entries: educationEntries,
+      setEntries: setEducationEntries,
+      activeId: activeEducationId,
+      setActiveId: setActiveEducationId,
+      titleField: "degree",
+      subtitleField: "school",
+      makeEntry: () => ({
         id: crypto.randomUUID(),
         degree: "",
         school: "",
@@ -106,19 +153,17 @@ export default function Content() {
         endDate: "",
         location: "",
         description: "",
-      };
-      setEducationEntries((prev) => [...prev, newEntry]);
-      setActiveEducationId(newEntry.id);
-      setActiveSection("education");
-      setIsAddModalOpen(false);
-      setAddedSections((s) =>
-        s.includes(sectionKey) ? s : [...s, sectionKey],
-      );
-      return;
-    }
-
-    if (sectionKey === "experience") {
-      const newEntry = {
+      }),
+    },
+    experience: {
+      Component: ProfessionalExperience,
+      entries: experienceEntries,
+      setEntries: setExperienceEntries,
+      activeId: activeExperienceId,
+      setActiveId: setActiveExperienceId,
+      titleField: "jobTitle",
+      subtitleField: "employer",
+      makeEntry: () => ({
         id: crypto.randomUUID(),
         jobTitle: "",
         employer: "",
@@ -126,29 +171,113 @@ export default function Content() {
         endDate: "",
         location: "",
         description: "",
-      };
-      setExperienceEntries((prev) => [...prev, newEntry]);
-      setActiveExperienceId(newEntry.id);
-      setActiveSection("experience");
-      setIsAddModalOpen(false);
-      setAddedSections((s) =>
-        s.includes(sectionKey) ? s : [...s, sectionKey],
-      );
-      return;
-    }
-
-    // unchanged behavior for non-repeatable sections
-    setAddedSections((s) => (s.includes(sectionKey) ? s : [...s, sectionKey]));
-    setActiveSection(sectionKey);
-    setIsAddModalOpen(false);
+      }),
+    },
   };
 
-  const closeActiveSection = () => setActiveSection(null);
+  const toggleSection = (key) =>
+    setExpandedSection((prev) => (prev === key ? null : key));
 
   const removeSection = (sectionKey) => {
     setAddedSections((s) => s.filter((k) => k !== sectionKey));
-    setActiveSection(null);
+    setExpandedSection((prev) => (prev === sectionKey ? null : prev));
   };
+
+  const handleAddSection = (sectionKey) => {
+    const repeatable = repeatableSections[sectionKey];
+    if (repeatable) {
+      const newEntry = repeatable.makeEntry();
+      repeatable.setEntries((prev) => [...prev, newEntry]);
+      repeatable.setActiveId(newEntry.id);
+    }
+
+    setAddedSections((s) => (s.includes(sectionKey) ? s : [...s, sectionKey]));
+    setExpandedSection(sectionKey);
+    setIsAddModalOpen(false);
+  };
+
+  const renderSingleSectionBody = (key) => {
+    const { Component, entry, setEntry } = singleSections[key];
+    return (
+      <Component
+        entry={entry}
+        onChange={setEntry}
+        onDone={() => setExpandedSection(null)}
+        onDelete={() => removeSection(key)}
+      />
+    );
+  };
+
+  const renderRepeatableSectionBody = (key) => {
+    const {
+      Component,
+      entries,
+      setEntries,
+      activeId,
+      setActiveId,
+      titleField,
+      subtitleField,
+      makeEntry,
+    } = repeatableSections[key];
+
+    if (activeId) {
+      const entry = entries.find((e) => e.id === activeId);
+      return (
+        <Component
+          entry={entry}
+          onChange={(updated) =>
+            setEntries((prev) =>
+              prev.map((e) => (e.id === activeId ? updated : e)),
+            )
+          }
+          onDone={() => setActiveId(null)}
+          onDelete={() => {
+            setEntries((prev) => prev.filter((e) => e.id !== activeId));
+            setActiveId(null);
+            if (entries.length <= 1) removeSection(key);
+          }}
+        />
+      );
+    }
+
+    return (
+      <div className={styles.entryList}>
+        {entries.map((e) => (
+          <button
+            key={e.id}
+            type="button"
+            className={styles.entryRow}
+            onClick={() => setActiveId(e.id)}
+          >
+            <span className={styles.entryRowTitle}>
+              {e[titleField] || "Untitled"}
+            </span>
+            {e[subtitleField] && (
+              <span className={styles.entryRowSubtitle}>
+                {e[subtitleField]}
+              </span>
+            )}
+          </button>
+        ))}
+        <button
+          type="button"
+          className={styles.addEntryBtn}
+          onClick={() => {
+            const newEntry = makeEntry();
+            setEntries((prev) => [...prev, newEntry]);
+            setActiveId(newEntry.id);
+          }}
+        >
+          + Add {key === "education" ? "education" : "experience"}
+        </button>
+      </div>
+    );
+  };
+
+  const renderSectionBody = (key) =>
+    repeatableSections[key]
+      ? renderRepeatableSectionBody(key)
+      : renderSingleSectionBody(key);
 
   return (
     <div className={styles.page}>
@@ -171,109 +300,39 @@ export default function Content() {
             onAddExtra={addExtra}
             onChangeExtra={changeExtra}
           />
-        ) : activeSection === "summary" ? (
-          <Summary
-            entry={summaryEntry}
-            onChange={setSummaryEntry}
-            onDone={closeActiveSection}
-            onDelete={() => removeSection("summary")}
-          />
-        ) : activeSection === "education" ? (
-          <Education
-            entry={educationEntries.find((e) => e.id === activeEducationId)}
-            onChange={(updated) =>
-              setEducationEntries((prev) =>
-                prev.map((e) => (e.id === activeEducationId ? updated : e)),
-              )
-            }
-            onDone={closeActiveSection}
-            onDelete={() => {
-              setEducationEntries((prev) =>
-                prev.filter((e) => e.id !== activeEducationId),
-              );
-              setActiveSection(null);
-              setActiveEducationId(null);
-            }}
-          />
-        ) : activeSection === "experience" ? (
-          <ProfessionalExperience
-            entry={experienceEntries.find((e) => e.id === activeExperienceId)}
-            onChange={(updated) =>
-              setExperienceEntries((prev) =>
-                prev.map((e) => (e.id === activeExperienceId ? updated : e)),
-              )
-            }
-            onDone={closeActiveSection}
-            onDelete={() => {
-              setExperienceEntries((prev) =>
-                prev.filter((e) => e.id !== activeExperienceId),
-              );
-              setActiveSection(null);
-              setActiveExperienceId(null);
-            }}
-          />
-        ) : activeSection === "skills" ? (
-          <Skills
-            entry={skillsEntry}
-            onChange={setSkillsEntry}
-            onDone={closeActiveSection}
-            onDelete={() => removeSection("skills")}
-          />
-        ) : activeSection === "languages" ? (
-          <Languages
-            entry={languagesEntry}
-            onChange={setLanguagesEntry}
-            onDone={closeActiveSection}
-            onDelete={() => removeSection("languages")}
-          />
-        ) : activeSection === "certificates" ? (
-          <Certificates
-            entry={certificatesEntry}
-            onChange={setCertificatesEntry}
-            onDone={closeActiveSection}
-            onDelete={() => removeSection("certificates")}
-          />
-        ) : activeSection === "interests" ? (
-          <Interests
-            entry={interestsEntry}
-            onChange={setInterestsEntry}
-            onDone={closeActiveSection}
-            onDelete={() => removeSection("interests")}
-          />
-        ) : activeSection === "projects" ? (
-          <Projects
-            entry={projectsEntry}
-            onChange={setProjectsEntry}
-            onDone={closeActiveSection}
-            onDelete={() => removeSection("projects")}
-          />
-        ) : activeSection === "courses" ? (
-          <Courses
-            entry={coursesEntry}
-            onChange={setCoursesEntry}
-            onDone={closeActiveSection}
-            onDelete={() => removeSection("courses")}
-          />
-        ) : activeSection === "awards" ? (
-          <Awards
-            entry={awardsEntry}
-            onChange={setAwardsEntry}
-            onDone={closeActiveSection}
-            onDelete={() => removeSection("awards")}
-          />
         ) : (
-          <SummaryCard
-            details={details}
-            onEdit={() => setIsEditing(true)}
-            onAddContent={() => setIsAddModalOpen(true)}
-          />
+          <SummaryCard details={details} onEdit={() => setIsEditing(true)} />
         )}
+
+        {addedSections.length > 0 && (
+          <div className={styles.sectionsList}>
+            {addedSections.map((key) => (
+              <SectionAccordion
+                key={key}
+                sectionKey={key}
+                expanded={expandedSection === key}
+                onToggle={() => toggleSection(key)}
+              >
+                {renderSectionBody(key)}
+              </SectionAccordion>
+            ))}
+          </div>
+        )}
+
+        <button
+          className={styles.addContentBtn}
+          onClick={() => setIsAddModalOpen(true)}
+        >
+          <Plus />
+          Add Content
+        </button>
       </div>
 
       <div className={styles.rightPanel}>
         <ResumePreview
           details={details}
           summary={summaryEntry.summary}
+          showSummary={addedSections.includes("summary")}
           fieldOrder={fieldOrder}
           activeExtras={activeExtras}
           extraValues={extraValues}

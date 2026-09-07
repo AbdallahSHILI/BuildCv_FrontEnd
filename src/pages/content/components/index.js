@@ -12,3 +12,4 @@ export { default as Interests } from "./Interests/Interests";
 export { default as Projects } from "./Projects/Projects";
 export { default as Awards } from "./Awards/Awards";
 export { default as Courses } from "./Courses/Courses";
+export { default as SectionAccordion } from "./Sectionaccordion/SectionAccordion";

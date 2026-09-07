@@ -8,6 +8,7 @@ const defaultOrder = ["email", "phone", "location"];
 export default function ResumePreview({
   details,
   summary,
+  showSummary = false,
   fieldOrder = defaultOrder,
   activeExtras = [],
   extraValues = {},
@@ -32,7 +33,7 @@ export default function ResumePreview({
     !details.fullName &&
     !hasAnyInfo &&
     !details.photo &&
-    !summary &&
+    !showSummary && // was: !summary
     education.length === 0 &&
     experience.length === 0;
 
@@ -46,7 +47,7 @@ export default function ResumePreview({
         <div className={styles.previewHeader}>{/* unchanged */}</div>
       )}
 
-      {summary && (
+      {showSummary && (
         <div className={styles.previewSection}>
           <h2 className={styles.previewSectionTitle}>Summary</h2>
           <div

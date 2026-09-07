@@ -1,6 +1,6 @@
 import styles from "./AddContentModal.module.css";
 
-const SECTIONS = [
+export const SECTIONS = [
   {
     key: "summary",
     label: "Summary",
