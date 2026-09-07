@@ -230,10 +230,14 @@ export default function Content() {
               prev.map((e) => (e.id === activeId ? updated : e)),
             )
           }
-          onDone={() => setActiveId(null)}
+          onDone={() => {
+            setActiveId(null);
+            setExpandedSection(null);
+          }}
           onDelete={() => {
             setEntries((prev) => prev.filter((e) => e.id !== activeId));
             setActiveId(null);
+            setExpandedSection(null);
             if (entries.length <= 1) removeSection(key);
           }}
         />
@@ -282,50 +286,65 @@ export default function Content() {
   return (
     <div className={styles.page}>
       <div className={styles.leftPanel}>
-        {isEditing ? (
-          <EditPersonalDetail
-            details={details}
-            onChange={updateField}
-            onPhotoChange={updatePhoto}
-            onDone={() => setIsEditing(false)}
-            fieldOrder={fieldOrder}
-            draggingKey={draggingKey}
-            dragOffsetY={dragOffsetY}
-            setItemRef={setItemRef}
-            onDragPointerDown={handleDragPointerDown}
-            onDragPointerMove={handleDragPointerMove}
-            onDragPointerUp={handleDragPointerUp}
-            activeExtras={activeExtras}
-            extraValues={extraValues}
-            onAddExtra={addExtra}
-            onChangeExtra={changeExtra}
-          />
+        {expandedSection ? (
+          // Focus mode: only the section being edited is shown.
+          // Everything reappears once its onDone/onToggle clears expandedSection.
+          <SectionAccordion
+            sectionKey={expandedSection}
+            expanded
+            onToggle={() => toggleSection(expandedSection)}
+          >
+            {renderSectionBody(expandedSection)}
+          </SectionAccordion>
         ) : (
-          <SummaryCard details={details} onEdit={() => setIsEditing(true)} />
-        )}
+          <>
+            {isEditing ? (
+              <EditPersonalDetail
+                details={details}
+                onChange={updateField}
+                onPhotoChange={updatePhoto}
+                onDone={() => setIsEditing(false)}
+                fieldOrder={fieldOrder}
+                draggingKey={draggingKey}
+                dragOffsetY={dragOffsetY}
+                setItemRef={setItemRef}
+                onDragPointerDown={handleDragPointerDown}
+                onDragPointerMove={handleDragPointerMove}
+                onDragPointerUp={handleDragPointerUp}
+                activeExtras={activeExtras}
+                extraValues={extraValues}
+                onAddExtra={addExtra}
+                onChangeExtra={changeExtra}
+              />
+            ) : (
+              <SummaryCard
+                details={details}
+                onEdit={() => setIsEditing(true)}
+              />
+            )}
 
-        {addedSections.length > 0 && (
-          <div className={styles.sectionsList}>
-            {addedSections.map((key) => (
-              <SectionAccordion
-                key={key}
-                sectionKey={key}
-                expanded={expandedSection === key}
-                onToggle={() => toggleSection(key)}
-              >
-                {renderSectionBody(key)}
-              </SectionAccordion>
-            ))}
-          </div>
-        )}
+            {addedSections.length > 0 && (
+              <div className={styles.sectionsList}>
+                {addedSections.map((key) => (
+                  <SectionAccordion
+                    key={key}
+                    sectionKey={key}
+                    expanded={false}
+                    onToggle={() => toggleSection(key)}
+                  />
+                ))}
+              </div>
+            )}
 
-        <button
-          className={styles.addContentBtn}
-          onClick={() => setIsAddModalOpen(true)}
-        >
-          <Plus />
-          Add Content
-        </button>
+            <button
+              className={styles.addContentBtn}
+              onClick={() => setIsAddModalOpen(true)}
+            >
+              <Plus />
+              Add Content
+            </button>
+          </>
+        )}
       </div>
 
       <div className={styles.rightPanel}>
