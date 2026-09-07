@@ -44,7 +44,36 @@ export default function ResumePreview({
           Your resume preview will appear here
         </div>
       ) : (
-        <div className={styles.previewHeader}>{/* unchanged */}</div>
+        <div className={styles.previewHeader}>
+          {details.photo && (
+            <img
+              src={details.photo}
+              alt="Profile"
+              className={styles.previewAvatar}
+            />
+          )}
+
+          <div>
+            {details.fullName && (
+              <h1 className={styles.previewName}>{details.fullName}</h1>
+            )}
+
+            {details.title && (
+              <p className={styles.previewTitle}>{details.title}</p>
+            )}
+
+            {hasAnyInfo && (
+              <div className={styles.previewContactRow}>
+                {contactItems.map(({ key, value, Icon }) => (
+                  <span key={key}>
+                    <Icon />
+                    <span>{value}</span>
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       )}
 
       {showSummary && (
