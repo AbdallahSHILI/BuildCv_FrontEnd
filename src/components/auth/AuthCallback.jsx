@@ -1,144 +1,76 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import styles from "./AuthLayout.module.css";
-import { AUTH_ENDPOINTS } from "../../config/api";
-import { googleIcon, facebookIcon } from "../../assets/index";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../assets/context/AuthContext";
+import { motion } from "framer-motion";
 
-const SignupForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+const AuthCallback = () => {
+  const navigate = useNavigate();
+  const { checkAuthStatus } = useAuth();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle signup logic here
-    console.log("Signup:", { name, email, password });
-  };
+  useEffect(() => {
+    const handleCallback = async () => {
+      try {
+        // Wait a moment for the session to be established
+        await new Promise((resolve) => setTimeout(resolve, 500));
 
-  const handleGoogleSignup = () => {
-    // Google OAuth is a full page redirect, so React state won't survive
-    // the round trip. sessionStorage lets AuthCallback know afterwards
-    // that this login came from the Signup page specifically, so it can
-    // trigger the "Welcome to Build CV" toast only on signup.
-    sessionStorage.setItem("authIntent", "signup");
-    // Redirect to Google OAuth endpoint
-    window.location.href = AUTH_ENDPOINTS.GOOGLE_AUTH;
-  };
+        // Check authentication status
+        await checkAuthStatus();
 
-  const handleFacebookSignup = () => {
-    // Add Facebook signup logic here
-    console.log("Facebook signup clicked");
-  };
+        // If this login round-trip started from the Signup page's Google
+        // button, flag a one-time "welcome" toast for the dashboard to
+        // pick up on mount. Consume the intent now so a page refresh or
+        // a later login doesn't re-trigger it.
+        const intent = sessionStorage.getItem("authIntent");
+        sessionStorage.removeItem("authIntent");
+        if (intent === "signup") {
+          sessionStorage.setItem("showWelcomeToast", "1");
+        }
+
+        // Redirect to dashboard
+        navigate("/dashboard", { replace: true });
+      } catch (error) {
+        console.error("Auth callback error:", error);
+        navigate("/login", { replace: true });
+      }
+    };
+
+    handleCallback();
+  }, [navigate, checkAuthStatus]);
 
   return (
-    <div className={styles.formCard}>
-      <div className={styles.header}>
-        <h2 className={styles.formTitle}>Sign Up</h2>
-        <p className={styles.linkText}>
-          Already have an account?{" "}
-          <Link to="/login" className={styles.link}>
-            Login
-          </Link>
-        </p>
-      </div>
-
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.inputGroup}>
-          <label className={styles.label}>Name</label>
-          <div className={styles.inputWrapper}>
-            <input
-              type="text"
-              className={styles.input}
-              placeholder="Enter your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            {name && (
-              <button
-                type="button"
-                className={styles.clearBtn}
-                onClick={() => setName("")}
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className={styles.inputGroup}>
-          <label className={styles.label}>Email</label>
-          <div className={styles.inputWrapper}>
-            <input
-              type="email"
-              className={styles.input}
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {email && (
-              <button
-                type="button"
-                className={styles.clearBtn}
-                onClick={() => setEmail("")}
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className={styles.inputGroup}>
-          <label className={styles.label}>Password</label>
-          <div className={styles.inputWrapper}>
-            <input
-              type={showPassword ? "text" : "password"}
-              className={styles.input}
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button
-              type="button"
-              className={styles.eyeBtn}
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "👁️" : "👁️‍🗨️"}
-            </button>
-          </div>
-        </div>
-
-        <button type="submit" className={styles.submitBtn}>
-          Create Account
-        </button>
-      </form>
-
-      <div className={styles.divider}>
-        <span className={styles.dividerText}>Or continue with</span>
-      </div>
-
-      <div className={styles.socialButtons}>
-        <button
-          className={styles.socialBtn}
-          onClick={handleGoogleSignup}
-          type="button"
-        >
-          <img src={googleIcon} alt="Google" className={styles.socialIcon} />
-        </button>
-        <button
-          className={styles.socialBtn}
-          onClick={handleFacebookSignup}
-          type="button"
-        >
-          <img
-            src={facebookIcon}
-            alt="Facebook"
-            className={styles.socialIcon}
-          />
-        </button>
-      </div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        flexDirection: "column",
+        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      }}
+    >
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        style={{
+          width: "50px",
+          height: "50px",
+          border: "4px solid rgba(255,255,255,0.3)",
+          borderTop: "4px solid white",
+          borderRadius: "50%",
+          marginBottom: "1rem",
+        }}
+      />
+      <h2 style={{ color: "white", marginBottom: "0.5rem" }}>
+        Completing sign in...
+      </h2>
+      <p style={{ color: "rgba(255,255,255,0.8)" }}>
+        Please wait while we redirect you.
+      </p>
+    </motion.div>
   );
 };
 
-export default SignupForm;
+export default AuthCallback;
