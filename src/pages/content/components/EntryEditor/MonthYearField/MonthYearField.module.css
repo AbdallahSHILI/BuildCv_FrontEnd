@@ -27,10 +27,9 @@
 }
 
 .popover {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  z-index: 20;
+  /* position (fixed/top/left) is now set inline in JS via a portal so
+     the popover can escape any ancestor's overflow:hidden clipping */
+  z-index: 1000;
   display: flex;
   background: var(--surface, #fff);
   border: 1px solid var(--border, #e2e8f0);
