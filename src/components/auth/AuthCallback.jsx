@@ -16,6 +16,16 @@ const AuthCallback = () => {
         // Check authentication status
         await checkAuthStatus();
 
+        // If this login round-trip started from the Signup page's Google
+        // button, flag a one-time "welcome" toast for the dashboard to
+        // pick up on mount. Consume the intent now so a page refresh or
+        // a later login doesn't re-trigger it.
+        const intent = sessionStorage.getItem("authIntent");
+        sessionStorage.removeItem("authIntent");
+        if (intent === "signup") {
+          sessionStorage.setItem("showWelcomeToast", "1");
+        }
+
         // Redirect to dashboard
         navigate("/dashboard", { replace: true });
       } catch (error) {
