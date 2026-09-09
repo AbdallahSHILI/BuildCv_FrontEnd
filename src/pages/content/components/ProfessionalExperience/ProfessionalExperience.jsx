@@ -45,11 +45,14 @@ export default function ProfessionalExperience({
           label="Start Date"
           value={entry.startDate}
           onChange={(v) => update("startDate", v)}
+          maxValue={entry.endDate}
         />
         <MonthYearField
           label="End Date"
           value={entry.endDate}
           onChange={(v) => update("endDate", v)}
+          minValue={entry.startDate}
+          allowPresent
         />
         <TextField
           label="Location"

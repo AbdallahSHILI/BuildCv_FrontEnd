@@ -4,6 +4,7 @@ import {
   TextField,
   RichTextField,
   EditEntryFooter,
+  MonthYearField,
   FieldRow,
 } from "../EntryEditor";
 
@@ -35,17 +36,18 @@ export default function Projects({ entry, onChange, onDone, onDelete }) {
       />
 
       <FieldRow>
-        <TextField
+        <MonthYearField
           label="Start Date"
           value={entry.startDate}
           onChange={(v) => update("startDate", v)}
-          placeholder="MM/YYYY"
+          maxValue={entry.endDate}
         />
-        <TextField
+        <MonthYearField
           label="End Date"
           value={entry.endDate}
           onChange={(v) => update("endDate", v)}
-          placeholder="MM/YYYY"
+          minValue={entry.startDate}
+          allowPresent
         />
       </FieldRow>
 
