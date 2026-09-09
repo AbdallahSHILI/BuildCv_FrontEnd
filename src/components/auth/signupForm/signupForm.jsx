@@ -17,6 +17,11 @@ const SignupForm = () => {
   };
 
   const handleGoogleSignup = () => {
+    // Google OAuth is a full page redirect, so React state won't survive
+    // the round trip. sessionStorage lets AuthCallback know afterwards
+    // that this login came from the Signup page specifically, so it can
+    // trigger the "Welcome to Build CV" toast only on signup.
+    sessionStorage.setItem("authIntent", "signup");
     // Redirect to Google OAuth endpoint
     window.location.href = AUTH_ENDPOINTS.GOOGLE_AUTH;
   };
