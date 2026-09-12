@@ -16,48 +16,55 @@ const Navbar = () => {
   // Extract Google photo if available
   const googlePhoto = user?.profilePicture || user?._json?.picture || null;
   const displayName = user?.displayName || user?.name || null;
+  const email = user?.email || user?._json?.email || null;
 
   return (
     <>
       <nav className={styles.navbar}>
         <div className={styles.left}>
-          <h2 className={styles.logo}>BuildCV</h2>
+          <div className={styles.logoMark}>B</div>
           <ul className={styles.links}>
             <li className={styles.active}>
               <img src={Nine_Point} alt="" className={styles.navIcon} />
-              Overview
+              <span>Overview</span>
             </li>
             <li>
               <img src={Content} alt="" className={styles.navIcon} />
-              Content
+              <span>Content</span>
             </li>
             <li>
               <img src={Customize} alt="" className={styles.navIcon} />
-              Customize
+              <span>Customize</span>
             </li>
             <li>
               <img src={IA_Tools} alt="" className={styles.navIcon} />
-              AI Tools
+              <span>AI Tools</span>
             </li>
           </ul>
         </div>
 
         <div className={styles.right}>
-          <span className={styles.resume}>Resume 1</span>
+          <span className={styles.resumePill}>Resume 1</span>
+
           <button className={styles.download}>
             Download
             <img src={Download} alt="" className={styles.downloadIcon} />
           </button>
 
-          {/* Google profile avatar — only shown when logged in via Google */}
           {googlePhoto && (
-            <div className={styles.avatarWrapper} title={displayName}>
+            <div className={styles.userChip} title={displayName}>
               <img
                 src={googlePhoto}
                 alt={displayName || "Profile"}
                 className={styles.avatar}
                 referrerPolicy="no-referrer"
               />
+              {displayName && (
+                <div className={styles.userText}>
+                  <span className={styles.userName}>{displayName}</span>
+                  {email && <span className={styles.userSub}>{email}</span>}
+                </div>
+              )}
             </div>
           )}
 
@@ -93,24 +100,23 @@ const Navbar = () => {
         <ul className={styles.sidebarLinks}>
           <li className={styles.sidebarActive}>
             <img src={Nine_Point} alt="" className={styles.navIcon} />
-            Overview
+            <span>Overview</span>
           </li>
           <li>
             <img src={Content} alt="" className={styles.navIcon} />
-            Content
+            <span>Content</span>
           </li>
           <li>
             <img src={Customize} alt="" className={styles.navIcon} />
-            Customize
+            <span>Customize</span>
           </li>
           <li>
             <img src={IA_Tools} alt="" className={styles.navIcon} />
-            AI Tools
+            <span>AI Tools</span>
           </li>
         </ul>
 
         <div className={styles.sidebarBottom}>
-          {/* Avatar in sidebar bottom too */}
           {googlePhoto && (
             <div className={styles.sidebarUser}>
               <img
