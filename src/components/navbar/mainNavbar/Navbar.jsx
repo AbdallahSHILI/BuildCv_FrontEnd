@@ -29,11 +29,25 @@ const Navbar = () => {
               <span>Overview</span>
             </li>
             <li>
-              <img src={Content} alt="" className={styles.navIcon} />
+              <span
+                className={styles.navIconTinted}
+                style={{
+                  WebkitMaskImage: `url(${Content})`,
+                  maskImage: `url(${Content})`,
+                }}
+                aria-hidden="true"
+              />
               <span>Content</span>
             </li>
             <li>
-              <img src={Customize} alt="" className={styles.navIcon} />
+              <span
+                className={styles.navIconTinted}
+                style={{
+                  WebkitMaskImage: `url(${Customize})`,
+                  maskImage: `url(${Customize})`,
+                }}
+                aria-hidden="true"
+              />
               <span>Customize</span>
             </li>
             <li>
@@ -103,11 +117,25 @@ const Navbar = () => {
             <span>Overview</span>
           </li>
           <li>
-            <img src={Content} alt="" className={styles.navIcon} />
+            <span
+              className={styles.navIconTinted}
+              style={{
+                WebkitMaskImage: `url(${Content})`,
+                maskImage: `url(${Content})`,
+              }}
+              aria-hidden="true"
+            />
             <span>Content</span>
           </li>
           <li>
-            <img src={Customize} alt="" className={styles.navIcon} />
+            <span
+              className={styles.navIconTinted}
+              style={{
+                WebkitMaskImage: `url(${Customize})`,
+                maskImage: `url(${Customize})`,
+              }}
+              aria-hidden="true"
+            />
             <span>Customize</span>
           </li>
           <li>
