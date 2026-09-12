@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from "react";
 import EmptyDashboard from "../../components/auth/dashboard/EmptyDashboard";
 import ResumesListDashboard from "../../components/auth/dashboard/ResumesListDashboard";
+import Toast from "../../components/toast/Toast";
 
 const Dashboard = () => {
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  // AuthCallback sets this flag right after a successful Google signup,
+  // then navigates here. Read it once on mount, then clear it so
+  // refreshing the dashboard or visiting it again later doesn't
+  // re-trigger the toast.
+  useEffect(() => {
+    if (sessionStorage.getItem("showWelcomeToast")) {
+      sessionStorage.removeItem("showWelcomeToast");
+      setShowWelcome(true);
+    }
+  }, []);
 
   // Fetch user's resumes on component mount
   useEffect(() => {
@@ -90,19 +103,14 @@ const Dashboard = () => {
   };
 
   // Show loading state
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your resumes...</p>
-        </div>
+  const content = loading ? (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-gray-600">Loading your resumes...</p>
       </div>
-    );
-  }
-
-  // Conditional rendering based on resume count
-  return resumes.length === 0 ? (
+    </div>
+  ) : resumes.length === 0 ? (
     <EmptyDashboard onCreateNew={handleCreateNew} onImport={handleImport} />
   ) : (
     <ResumesListDashboard
@@ -113,6 +121,19 @@ const Dashboard = () => {
       onView={handleView}
       onDownload={handleDownload}
     />
+  );
+
+  return (
+    <>
+      {showWelcome && (
+        <Toast
+          title="Welcome to Build CV 🎉"
+          message="Let's get your resume looking great."
+          onClose={() => setShowWelcome(false)}
+        />
+      )}
+      {content}
+    </>
   );
 };
 
