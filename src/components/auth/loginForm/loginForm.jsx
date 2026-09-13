@@ -29,7 +29,12 @@ const LoginForm = () => {
     }
   };
 
-  const handleGoogleSignup = () => {
+  const handleGoogleLogin = () => {
+    // Google OAuth is a full page redirect, so React state won't survive
+    // the round trip. sessionStorage lets AuthCallback know afterwards
+    // that this came from the Login page specifically, so it can show a
+    // "Welcome back" toast instead of the signup "Welcome" one.
+    sessionStorage.setItem("authIntent", "login");
     loginWithGoogle();
   };
 
@@ -131,7 +136,7 @@ const LoginForm = () => {
       <div className={styles.socialButtons}>
         <button
           className={styles.socialBtn}
-          onClick={handleGoogleSignup}
+          onClick={handleGoogleLogin}
           type="button"
         >
           <img src={googleIcon} alt="Google" className={styles.socialIcon} />
