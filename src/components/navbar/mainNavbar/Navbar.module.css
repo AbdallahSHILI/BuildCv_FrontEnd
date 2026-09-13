@@ -171,6 +171,77 @@
   text-overflow: ellipsis;
 }
 
+.logoutBtn {
+  border: none;
+  border-radius: 999px;
+  padding: 9px 16px;
+  background: #e5e5e5;
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.logoutBtn:hover {
+  background: #dcdcdc;
+}
+
+.confirmOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+}
+
+.confirmBox {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  width: 300px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.confirmText {
+  margin: 0 0 20px;
+  font-size: 15px;
+  color: #1e293b;
+  text-align: center;
+}
+
+.confirmActions {
+  display: flex;
+  gap: 10px;
+}
+
+.confirmCancel,
+.confirmLogout {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 9px 0;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.confirmCancel {
+  background: #e5e5e5;
+  color: #1e293b;
+}
+
+.confirmLogout {
+  background: #dc2626;
+  color: #fff;
+}
+
+.confirmLogout:hover {
+  background: #b91c1c;
+}
+
 .hamburger {
   display: none;
   flex-direction: column;

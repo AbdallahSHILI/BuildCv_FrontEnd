@@ -11,7 +11,8 @@ import {
 
 const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { user } = useAuth(); // grab the current user from context
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const { user, logout } = useAuth(); // grab the current user + logout from context
 
   // Extract Google photo if available
   const googlePhoto = user?.profilePicture || user?._json?.picture || null;
@@ -81,6 +82,14 @@ const Navbar = () => {
               )}
             </div>
           )}
+
+          <button
+            className={styles.logoutBtn}
+            onClick={() => setShowLogoutConfirm(true)}
+            aria-label="Log out"
+          >
+            Logout
+          </button>
 
           <button
             className={styles.hamburger}
@@ -163,8 +172,42 @@ const Navbar = () => {
             Download
             <img src={Download} alt="" className={styles.downloadIcon} />
           </button>
+          <button
+            className={styles.logoutBtn}
+            onClick={() => setShowLogoutConfirm(true)}
+          >
+            Logout
+          </button>
         </div>
       </div>
+
+      {/* Logout confirmation modal */}
+      {showLogoutConfirm && (
+        <div
+          className={styles.confirmOverlay}
+          onClick={() => setShowLogoutConfirm(false)}
+        >
+          <div
+            className={styles.confirmBox}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className={styles.confirmText}>
+              Are you sure you want to log out?
+            </p>
+            <div className={styles.confirmActions}>
+              <button
+                className={styles.confirmCancel}
+                onClick={() => setShowLogoutConfirm(false)}
+              >
+                Cancel
+              </button>
+              <button className={styles.confirmLogout} onClick={logout}>
+                Log out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
