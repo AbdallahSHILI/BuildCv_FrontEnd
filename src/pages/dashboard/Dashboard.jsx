@@ -2,20 +2,28 @@ import React, { useState, useEffect } from "react";
 import EmptyDashboard from "../../components/auth/dashboard/EmptyDashboard";
 import ResumesListDashboard from "../../components/auth/dashboard/ResumesListDashboard";
 import Toast from "../../components/toast/Toast";
+import { useAuth } from "../../assets/context/AuthContext";
 
 const Dashboard = () => {
+  const { user } = useAuth();
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showWelcome, setShowWelcome] = useState(false);
+  // null = no toast, "signup" = welcome toast, "login" = welcome back toast
+  const [toastIntent, setToastIntent] = useState(null);
 
-  // AuthCallback sets this flag right after a successful Google signup,
-  // then navigates here. Read it once on mount, then clear it so
+  // Same fallback chain used in Navbar for the display name
+  const displayName = user?.displayName || user?.name || null;
+  const firstName = displayName ? displayName.split(" ")[0] : null;
+
+  // AuthCallback sets this flag right after a successful Google signup or
+  // login, then navigates here. Read it once on mount, then clear it so
   // refreshing the dashboard or visiting it again later doesn't
   // re-trigger the toast.
   useEffect(() => {
-    if (sessionStorage.getItem("showWelcomeToast")) {
-      sessionStorage.removeItem("showWelcomeToast");
-      setShowWelcome(true);
+    const intent = sessionStorage.getItem("authToastIntent");
+    if (intent === "signup" || intent === "login") {
+      sessionStorage.removeItem("authToastIntent");
+      setToastIntent(intent);
     }
   }, []);
 
@@ -125,11 +133,22 @@ const Dashboard = () => {
 
   return (
     <>
-      {showWelcome && (
+      {toastIntent === "signup" && (
         <Toast
-          title="Welcome to Build CV 🎉"
+          title={
+            firstName ? `Welcome, ${firstName} 🎉` : "Welcome to Build CV 🎉"
+          }
           message="Let's get your resume looking great."
-          onClose={() => setShowWelcome(false)}
+          onClose={() => setToastIntent(null)}
+        />
+      )}
+      {toastIntent === "login" && (
+        <Toast
+          title={
+            firstName ? `Welcome back, ${firstName} 👋` : "Welcome back 👋"
+          }
+          message="Good to see you again."
+          onClose={() => setToastIntent(null)}
         />
       )}
       {content}
